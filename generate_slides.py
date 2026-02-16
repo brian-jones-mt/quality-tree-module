@@ -105,13 +105,28 @@ def generate_slides_html(title, slides_text):
 import subprocess
 
 def compile_sass():
-    """Compile SCSS to CSS using the sass compiler."""
+    """Compile SCSS to CSS using the sass compiler. If sass is not found, attempt to install it."""
+    try:
+        # Check if sass is available
+        subprocess.run(['sass', '--version'], check=True, capture_output=True)
+    except FileNotFoundError:
+        print("SASS compiler not found. Attempting to install 'sass' globally using npm...")
+        try:
+            subprocess.run(['npm', 'install', '-g', 'sass'], check=True)
+            print("SASS installed successfully.")
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            print(f"Failed to install SASS: {e}")
+            print("Please ensure npm is installed and accessible in your PATH, or install sass manually (e.g., 'npm install -g sass').")
+            raise SystemExit(1)
+    except subprocess.CalledProcessError as e:
+        print(f"SASS --version command failed: {e.stderr.decode().strip()}")
+        raise SystemExit(1)
+
     try:
         subprocess.run(['sass', 'styles/main.scss', 'styles/main.css'], check=True)
         print("SASS compiled successfully.")
-    except (subprocess.CalledProcessError, FileNotFoundError) as e:
-        print(f"Error compiling SASS: {e}")
-        print("Please ensure 'sass' is installed and accessible in your PATH.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error compiling SASS: {e.stderr.decode().strip()}")
         raise SystemExit(1)
 
 def main():
