@@ -2,6 +2,7 @@ body {
   font-family: Inter, "Segoe UI", Roboto, -apple-system, system-ui, "Helvetica Neue", Arial;
   background: linear-gradient(180deg, #ffffff 0%, #f6f8fa 100%);
   color: #222;
+  font-size: 20em;
 }
 
 #app {

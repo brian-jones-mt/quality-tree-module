@@ -102,7 +102,20 @@ def generate_slides_html(title, slides_text):
     return html_slides, json.dumps(html_slides)
 
 
+import subprocess
+
+def compile_sass():
+    """Compile SCSS to CSS using the sass compiler."""
+    try:
+        subprocess.run(['sass', 'styles/main.scss', 'styles/main.css'], check=True)
+        print("SASS compiled successfully.")
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        print(f"Error compiling SASS: {e}")
+        print("Please ensure 'sass' is installed and accessible in your PATH.")
+        raise SystemExit(1)
+
 def main():
+    compile_sass()
     if not SRC.exists():
         print(f"Source {SRC} not found.")
         raise SystemExit(1)
