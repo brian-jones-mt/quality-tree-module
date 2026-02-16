@@ -1,0 +1,10 @@
+generate_slides.py
+pyproject.toml
+readme.md
+./generate_slides.py
+quality_tree_module.egg-info/PKG-INFO
+quality_tree_module.egg-info/SOURCES.txt
+quality_tree_module.egg-info/dependency_links.txt
+quality_tree_module.egg-info/entry_points.txt
+quality_tree_module.egg-info/requires.txt
+quality_tree_module.egg-info/top_level.txt

@@ -1,17 +1,3 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quality Tree — Intro</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/theme/black.css" id="theme">
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">
-        <section data-markdown>
-          <textarea data-template>
 Certainly! Here is the 8-hour training package formatted in clean, scannable Markdown, optimized for a lead developer audience.
 
 ---
@@ -22,9 +8,28 @@ Certainly! Here is the 8-hour training package formatted in clean, scannable Mar
 
 **Trainer:** Lead Developer Expert
 
-**Duration:** 8 Hours (Full Day)
+**Duration:** 8.5 Hours (Full Day)
 
 **Format:** Modular (Theory + Lab)
+
+---
+
+## 🎯 Introduction to the Day
+
+Quality is not a binary state. It's a **set of trade-offs**.
+
+Every system is "fast enough," "secure enough," and "reliable enough" on some dimensions—and not enough on others. The real skill isn't building a perfect system; it's **defining which dimensions matter for YOUR project**.
+
+This workshop teaches you:
+
+- **How to translate** vague stakeholder wishes ("fast," "secure," "scalable") into **measurable architectural requirements**
+- **How to defend** your architectural choices **with data**, not opinions
+- **How to protect** your codebase from scope creep and impossible requests
+- **How to evolve** your system intentionally, not reactively
+
+By the end of today, you'll leave with a practical Quality Tree that you can apply to a real project—and the skills to build one for any architecture challenge you face.
+
+**Let's begin.**
 
 ---
 
@@ -32,6 +37,7 @@ Certainly! Here is the 8-hour training package formatted in clean, scannable Mar
 
 | Time | Module | Focus |
 | --- | --- | --- |
+| **08:30** | **Module 0: Introduction** | Why Quality Trees Matter. Setting the stage for the day. |
 | **09:00** | **Module 1: The Anatomy of Quality** | Breaking down "Vague Requirements" into "Hard Metrics." |
 | **10:45** | **Module 2: Drafting the Tree** | The Stimulus-Response methodology. |
 | **13:30** | **Module 3: Prioritization & Impact** | The (H,M,L) Matrix and Architectural Significance. |
@@ -49,6 +55,7 @@ Certainly! Here is the 8-hour training package formatted in clean, scannable Mar
 1. **Quality Attribute:** (e.g., Performance, Security, Availability).
 2. **Attribute Refinement:** (e.g., Latency vs. Throughput).
 3. **Quality Attribute Scenario (The "Leaf"):** A concrete, measurable event.
+
 
 
 ---
@@ -111,18 +118,3 @@ Participants rate each leaf on two scales:
 ---
 
 **Would you like me to draft a "Mock Project Case Study" (e.g., a Fintech App or E-commerce site) to use as a hands-on exercise for Module 2?**
-          </textarea>
-        </section>
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/markdown/markdown.esm.js"></script>
-    <script>
-      const deck = new Reveal({
-        plugins: [ RevealMarkdown ]
-      });
-      deck.initialize();
-    </script>
-  </body>
-</html>

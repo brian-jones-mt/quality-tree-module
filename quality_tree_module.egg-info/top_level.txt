@@ -1,0 +1,4 @@
+dist
+docs
+generate_slides
+styles

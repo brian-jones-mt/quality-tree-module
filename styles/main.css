@@ -1,0 +1,18 @@
+/* Compiled CSS (from main.scss) - kept here so generator can copy a ready-to-use stylesheet */
+body {
+  font-family: Inter, "Segoe UI", Roboto, -apple-system, system-ui, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #ffffff 0%, #f6f8fa 100%);
+  color: #222;
+}
+#app{display:flex;min-height:100vh;align-items:center;justify-content:center;padding:40px}
+.slide-container{width:100%;max-width:1200px;height:85vh;background:#fff;border-radius:8px;box-shadow:0 18px 60px rgba(10,20,40,.15);display:flex;flex-direction:column;overflow:hidden}
+.slide-content{flex:1 1 auto;padding:64px 80px;overflow:auto}
+.slide-content h1{font-size:3.25rem;margin-bottom:10px;color:#0b5a3a;font-weight:700}
+.slide-content h2{font-size:1.25rem;color:#16a34a;margin-bottom:18px}
+.slide-content p{font-size:1.05rem;margin-bottom:1rem}
+.slide-control{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-top:1px solid #eee;background:#fafafa}
+.slide-number{color:#666;font-weight:600}
+button{background:#16a34a;color:#fff;border:none;padding:10px 18px;border-radius:6px;cursor:pointer}
+button:disabled{background:#d1d5db;cursor:not-allowed}
+.keyboard-hint{color:#8892a6;font-size:.95rem;margin-top:14px;text-align:center}
+@media (max-width:900px){.slide-container{max-width:100%;height:92vh}.slide-content{padding:28px}.slide-content h1{font-size:2rem}}
