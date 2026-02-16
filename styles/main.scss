@@ -73,3 +73,34 @@ button:disabled { background: #d1d5db; cursor: not-allowed; }
   .slide-content { padding: 28px; }
   .slide-content h1 { font-size: 2rem; }
 }
+
+.reveal-list {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 1.5em;
+  }
+
+  li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &.revealed .full-text {
+      display: inline;
+    }
+  }
+
+  .initial {
+    font-weight: bold;
+    margin-right: 10px;
+    width: 30px;
+    display: inline-block;
+  }
+
+  .full-text {
+    display: none;
+  }
+}
+

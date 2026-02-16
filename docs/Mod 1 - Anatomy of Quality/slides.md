@@ -52,31 +52,7 @@ Discussion: When we deliver a quality product - What did we do?
 
 ## Architectural Characteristics
 
-<style>
-.reveal-list ul {
-  list-style-type: none;
-  padding: 0;
-  font-size: 1.5em;
-}
-.reveal-list li {
-  margin-bottom: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-.initial {
-  font-weight: bold;
-  margin-right: 10px;
-  width: 30px;
-  display: inline-block;
-}
-.full-text {
-  display: none;
-}
-.reveal-list li.revealed .full-text {
-  display: inline;
-}
-</style>
+
 
 <div class="reveal-list">
   <ul>
