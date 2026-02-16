@@ -1,5 +1,13 @@
 # Module 0: Introduction to Quality Trees
 
+## Presenters
+
+- Brian Jones
+
+## Course Designers
+
+- [Brian Jones :octocat:](https://github.com/brian-jones-mt/quality-tree-module)
+
 ---
 
 ## Welcome to the Workshop
