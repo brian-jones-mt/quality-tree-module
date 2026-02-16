@@ -185,11 +185,15 @@ def main():
     <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
-    <main style="padding:40px; max-width:980px; margin:auto;">
-      {overview_html}
-      <h2 style="margin-top:24px;">Modules</h2>
-      {links_html}
-    </main>
+    <div id="app">
+      <div class="slide-container">
+        <main style="padding:40px; max-width:980px; margin:auto;">
+          {overview_html}
+          <h2 style="margin-top:24px;">Modules</h2>
+          {links_html}
+        </main>
+      </div>
+    </div>
   </body>
 </html>
 '''
