@@ -10,25 +10,46 @@ Requires-Dist: markdown>=3.7
 
 # Quality Tree Training
 
-This repository contains a reusable training package to aid understanding of the quality tree process.  The Target audience is senior and lead engineers, Tech Leads, and aspiring architects.
+This repository contains a reusable training package to aid understanding of the quality tree process. The target audience is senior and lead engineers, Tech Leads, and aspiring architects.
 
-The output of this is a series of slide decks and resources for use in training.
+The output of this is a series of slide decks and resources for use in training, generated from Markdown files in the `docs` directory.
 
-How to generate and preview the slide deck
-----------------------------------------
+How to generate and preview the slide decks
+-----------------------------------------
 
-- Generate the HTML slide deck from the `overview.md` source:
+### 1. Install Dependencies
+
+This project uses `uv` for environment and package management. Install the required dependencies:
 
 ```bash
-python3 generate_slides.py
+uv pip install -r requirements.txt
+```
+*(Note: If `requirements.txt` does not exist, you may need to install them manually: `uv pip install markdown python-markdown-math Pygments`)*
+
+### 2. Generate the Slides
+
+Generate the HTML slide decks from the `slides.md` files in the `docs` directory:
+
+```bash
+uv run python3 generate_slides.py
 ```
 
-- Open the generated slides locally:
+This will create a `dist` directory containing the generated HTML files, organized by module.
+
+### 3. Preview the Slides
+
+Open the main index file to see the list of modules:
 
 ```bash
-open docs/index.html
+open dist/index.html
+```
+
+Or open a specific module directly:
+
+```bash
+open "dist/Mod 1 - Anatomy of Quality/index.html"
 ```
 
 Notes:
-- The repository is configured with a GitHub Actions workflow `.github/workflows/deploy.yml` that runs `generate_slides.py` on push and deploys the `docs/` folder to GitHub Pages.
-- If you want a different theme, edit `docs/index.html` or update `generate_slides.py` template to change the Reveal.js theme.
+- The repository is configured with a GitHub Actions workflow `.github/workflows/deploy.yml` that runs `generate_slides.py` on push and deploys the `dist/` folder to GitHub Pages.
+- The slides are built using a Vue.js template in `generate_slides.py`. You can edit the template there to change the layout or style of the slides.

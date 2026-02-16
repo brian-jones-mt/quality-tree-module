@@ -1,14 +1,10 @@
-Certainly! Here is the 8-hour training package formatted in clean, scannable Markdown, optimized for a lead developer audience.
-
----
-
 # 🌳 Workshop: Quality-Driven Architecture
 
 ### *Using Quality Trees to Measure Project Impact*
 
 **Trainer:** Lead Developer Expert
 
-**Duration:** 8.5 Hours (Full Day)
+**Duration:** 8 Hours (Full Day)
 
 **Format:** Modular (Theory + Lab)
 
@@ -39,10 +35,12 @@ By the end of today, you'll leave with a practical Quality Tree that you can app
 | --- | --- | --- |
 | **08:30** | **Module 0: Introduction** | Why Quality Trees Matter. Setting the stage for the day. |
 | **09:00** | **Module 1: The Anatomy of Quality** | Breaking down "Vague Requirements" into "Hard Metrics." |
-| **10:45** | **Module 2: Drafting the Tree** | The Stimulus-Response methodology. |
-| **13:30** | **Module 3: Prioritization & Impact** | The (H,M,L) Matrix and Architectural Significance. |
-| **15:15** | **Module 4: Variants & Evolution** | Risk-Storming, Security, and Maintenance trees. |
-| **16:30** | **Module 5: Operationalizing the Tree** | Integration with CI/CD and Product Roadmaps. |
+| **10:00** | **Module 2: Drafting the Tree (Part 1)** | The Stimulus-Response methodology (Introduction). |
+| **11:00** | **Module 2: Drafting the Tree (Part 2)** | The Stimulus-Response methodology (Practical). |
+| **12:00** | **Lunch Break** | |
+| **13:00** | **Module 3: Prioritization & Impact** | The (H,M,L) Matrix and Architectural Significance. |
+| **14:00** | **Module 4: Variants & Evolution** | Risk-Storming, Security, and Maintenance trees. |
+| **15:00** | **Module 5: Operationalizing the Tree** | Integration with CI/CD and Product Roadmaps. |
 
 ---
 

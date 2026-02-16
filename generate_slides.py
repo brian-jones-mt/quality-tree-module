@@ -19,6 +19,13 @@ VUE_TEMPLATE = '''<!doctype html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({{
+        startOnLoad: true,
+        querySelector: '.slide-content code.language-mermaid',
+      }});
+    </script>
     <link rel="stylesheet" href="{css_path}">
   </head>
   <body>
@@ -129,66 +136,62 @@ def compile_sass():
         print(f"Error compiling SASS: {e.stderr.decode().strip()}")
         raise SystemExit(1)
 
-def main():
-    compile_sass()
-    if not SRC.exists():
-        print(f"Source {SRC} not found.")
+def _setup_output_directories(src_path: Path, out_path: Path, styles_path: Path):
+    """
+    Sets up output directories and copies static assets like styles.
+    """
+    if not src_path.exists():
+        print(f"Source {src_path} not found.")
         raise SystemExit(1)
 
-    OUTDIR.mkdir(parents=True, exist_ok=True)
+    out_path.mkdir(parents=True, exist_ok=True)
 
-    # Copy styles into output so pages can reference a ready-made stylesheet
-    src_styles = ROOT / 'styles'
-    out_styles = OUTDIR / 'styles'
-    if src_styles.exists():
+    out_styles = out_path / 'styles'
+    if styles_path.exists():
         try:
-            shutil.copytree(src_styles, out_styles, dirs_exist_ok=True)
+            shutil.copytree(styles_path, out_styles, dirs_exist_ok=True)
         except Exception:
             # fallback: copy files individually
             out_styles.mkdir(parents=True, exist_ok=True)
-            for p in src_styles.glob('*'):
+            for p in styles_path.glob('*'):
                 if p.is_file():
                     shutil.copy2(p, out_styles / p.name)
+    return out_styles
 
-    # Find all slides.md files
-    slides_files = list(SRC.glob('**/slides.md'))
+
+def _process_module_slides(slides_file: Path, out_root_dir: Path, styles_output_dir: Path):
+    """
+    Processes a single slides.md file, generates its HTML, and writes it to the output directory.
+    """
+    rel_path = slides_file.relative_to(SRC)
+    module_dir = slides_file.parent
+    module_name = module_dir.name
     
-    if not slides_files:
-        print("No slides.md files found in docs directory.")
-        raise SystemExit(1)
+    markdown_content = slides_file.read_text(encoding='utf-8')
+    
+    html_slides, slides_json = generate_slides_html(module_name, markdown_content)
+    
+    out_module_dir = out_root_dir / module_name
+    out_module_dir.mkdir(parents=True, exist_ok=True)
+    
+    css_rel = os.path.relpath(styles_output_dir / 'main.css', start=out_module_dir)
 
-    for slides_file in sorted(slides_files):
-        # Get relative path and module folder
-        rel_path = slides_file.relative_to(SRC)
-        module_dir = slides_file.parent
-        module_name = module_dir.name
-        
-        # Read slides
-        markdown_content = slides_file.read_text(encoding='utf-8')
-        
-        # Parse and convert to HTML
-        html_slides, slides_json = generate_slides_html(module_name, markdown_content)
-        
-        # Create output directory
-        out_module_dir = OUTDIR / module_name
-        out_module_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Compute CSS path relative to this module output directory
-        css_rel = os.path.relpath(out_styles / 'main.css', start=out_module_dir)
+    html_output = VUE_TEMPLATE.format(
+      title=module_name,
+      slides_json=slides_json,
+      css_path=css_rel.replace('\\\\', '/')
+    )
+    
+    out_file = out_module_dir / "index.html"
+    out_file.write_text(html_output, encoding='utf-8')
+    print(f"Generated {out_file}")
 
-        # Generate HTML file
-        html_output = VUE_TEMPLATE.format(
-          title=module_name,
-          slides_json=slides_json,
-          css_path=css_rel.replace('\\\\', '/')
-        )
-        
-        out_file = out_module_dir / "index.html"
-        out_file.write_text(html_output, encoding='utf-8')
-        print(f"Generated {out_file}")
 
-    # Generate central index page from overview.md
-    overview_file = SRC / 'overview.md'
+
+def _generate_index_page(overview_file: Path, slides_files: list[Path], out_root_dir: Path):
+    """
+    Generates the central index page from overview.md.
+    """
     if overview_file.exists():
         overview_md = overview_file.read_text(encoding='utf-8')
         overview_html = parse_markdown_to_html(overview_md)
@@ -226,11 +229,94 @@ def main():
 </html>
 '''
 
-        index_out = OUTDIR / 'index.html'
+        index_out = out_root_dir / 'index.html'
         index_out.write_text(INDEX_TEMPLATE, encoding='utf-8')
         print(f"Generated central index at {index_out}")
     else:
         print("No overview.md found; skipping central index generation.")
+
+
+def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
+    """
+    Finds Mermaid files in src_dir, compiles them to PNG, and places them in out_dir.
+    """
+    mermaid_extensions = ('.mmd', '.mermaid')
+    
+    for root, _, files in os.walk(src_dir):
+        for file in files:
+            if file.lower().endswith(mermaid_extensions):
+                src_path = Path(root) / file
+                # Construct relative path from src_dir
+                relative_path = src_path.relative_to(src_dir)
+                # Change extension to .png
+                dest_file_name = file.rsplit('.', 1)[0] + '.png'
+                dest_path = out_dir / relative_path.parent / dest_file_name
+                
+                # Create parent directories if they don't exist
+                dest_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                command = [
+                    'npx', '-p', '@mermaid-js/mermaid-cli', 'mmdc',
+                    '-i', str(src_path),
+                    '-o', str(dest_path)
+                ]
+                print(f"Compiling Mermaid: {' '.join(command)}")
+                try:
+                    # Capture output to prevent printing to stdout by run_shell_command
+                    result = subprocess.run(command, check=True, capture_output=True, text=True)
+                    print(f"Successfully compiled {src_path} to {dest_path}")
+                    if result.stdout:
+                        print(f"Mermaid-cli stdout: {result.stdout}")
+                    if result.stderr:
+                        print(f"Mermaid-cli stderr: {result.stderr}")
+                except subprocess.CalledProcessError as e:
+                    print(f"Failed to compile {src_path}: {e}")
+                    print(f"Mermaid-cli stdout: {e.stdout}")
+                    print(f"Mermaid-cli stderr: {e.stderr}")
+                    raise SystemExit(1)
+
+
+def _copy_images_to_output(src_dir: Path, out_dir: Path):
+    """
+    Copies image files from the source directory to the output directory,
+    maintaining the relative directory structure.
+    """
+    image_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp')
+    
+    for root, _, files in os.walk(src_dir):
+        for file in files:
+            if file.lower().endswith(image_extensions):
+                src_path = Path(root) / file
+                # Construct relative path from src_dir
+                relative_path = src_path.relative_to(src_dir)
+                # Construct destination path in out_dir
+                dest_path = out_dir / relative_path
+                
+                # Create parent directories if they don't exist
+                dest_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                shutil.copy2(src_path, dest_path)
+                print(f"Copied image: {src_path} to {dest_path}")
+
+
+def main():
+    compile_sass()
+    
+    out_styles = _setup_output_directories(SRC, OUTDIR, ROOT / 'styles')
+    _compile_mermaid_diagrams(SRC, OUTDIR)
+    _copy_images_to_output(SRC, OUTDIR)
+
+    slides_files = list(SRC.glob('**/slides.md'))
+    
+    if not slides_files:
+        print("No slides.md files found in docs directory.")
+        raise SystemExit(1)
+
+    for slides_file in sorted(slides_files):
+        _process_module_slides(slides_file, OUTDIR, out_styles)
+
+    _generate_index_page(SRC / 'overview.md', slides_files, OUTDIR)
+
 
 
 if __name__ == '__main__':

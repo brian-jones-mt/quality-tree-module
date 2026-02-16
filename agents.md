@@ -13,9 +13,13 @@ The output for this repository will be a series of slides and resources that can
 {{T
 |+Folder| Description|
 |+ Docs| Documentation, Heirarchical|
+|++ Moduule Folders| |
+|+++ slides.md| slides associated with module|
+|+++ *imagename*.mms| Mermaid image file, to be generated into an image in dist/images|
 |+ Style| Style Assets|
 |+ Dist| Distribution files Compiled, Heirarchy preserved from Docs folder|
 |++ Styles| Compiled Style sheets used with distribution Files|
+|++ images| Compiled png images |
 }}
 @endsalt
 ```

@@ -12,7 +12,7 @@
 
 ## Welcome to the Workshop
 
-### *Quality-Driven Architecture: Using Quality Trees to Measure Project Impact*
+### Quality-Driven Architecture: Using Quality Trees to Measure Project Impact
 
 **Duration:** 30 minutes
 

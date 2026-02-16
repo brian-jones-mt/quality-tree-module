@@ -8,7 +8,7 @@ body {
   font-family: Inter, "Segoe UI", Roboto, -apple-system, system-ui, "Helvetica Neue", Arial;
   background: linear-gradient(180deg, $bg-gradient-start 0%, $bg-gradient-end 100%);
   color: #222;
-  font-size: 20em;
+  font-size: 2em;
 }
 
 #app {
@@ -43,7 +43,7 @@ body {
 }
 
 .slide-content h2 {
-  font-size: 1.25rem;
+  font-size: 2.25rem;
   color: $brand-green;
   margin-bottom: 18px;
 }
