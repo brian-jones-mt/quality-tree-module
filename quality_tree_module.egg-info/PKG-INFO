@@ -10,7 +10,7 @@ Requires-Dist: markdown>=3.7
 
 # Quality Tree Training
 
-This repository contains a reusable training package to aid understanding of the quality tree process. The target audience is senior and lead engineers, Tech Leads, and aspiring architects.
+This repository contains a reusable training package to aid understanding of the quality tree process. The target audience is senior and leading engineers, Tech Leads, and aspiring architects.
 
 The output of this is a series of slide decks and resources for use in training, generated from Markdown files in the `docs` directory.
 

@@ -29,6 +29,20 @@ By the end of today, you'll leave with a practical Quality Tree that you can app
 
 ---
 
+## Audience
+
+**Leading Engineer** - A senior Engineer, Lead Engineer, and aspiring Architect. 
+
+In this series of presentation a "leading engineer" covers Engineers with a number of job titles. This could also be relevant to people who use Architects as an insight into architectural thinking.
+
+### Should I leave this alone?
+
+You are probably too inexperienced if:
+- You have not deployed an application as part of a solution.
+- You have not wanted to yell at an architect at some point in your career.
+
+---
+
 ## 📅 Workshop Schedule
 
 | Time | Module | Focus |
