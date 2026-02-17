@@ -99,25 +99,26 @@ Almost all architectural decisions involve tradeoffs between characteristics.
 
 As an example:
 
-- Splitting a C# MVC webside into a front end angular app, and a back end ASP.Net API
-  - Improves 
-    - Maintainability
-      - Front end developers can add features quicker
-    - Performance
-      - Server does less work generating full HTML page
-      - less data to transfer between front end and back end      
-      - Front end application can be cached as part of a content delivery network, inproving first load speed
-    - Scalability
-      - Since Front end app is essentially a static site which passes smaller requests, back end can deal with more requests.
-      - Back end scaling should be less required.
-  - Degrades
-    - Cost
-      - Need to pay for content delivery network, or static site as well as original server for API.
-    - Maintainability
-      - Needs two sets of developers (front end and back end) to communicate to deliver  a feature. Alternatively full stack engineers need to widen knowlege scope. 
-    - Security
-      - Need to implement greater controls to not trust user inputs from front end application 
+Splitting a C# MVC webside into a front end angular app, and a back end ASP.Net API
 
+- Improves 
+  - Maintainability
+    - Front end developers can add features quicker
+  - Performance
+    - Server does less work generating full HTML page
+    - less data to transfer between front end and back end      
+    - Front end application can be cached as part of a content delivery network, inproving first load speed
+  - Scalability
+    - Since front end app is essentially a static site which passes smaller requests, back end can deal with more requests.
+    - Back end scaling should be less required.
+- Degrades
+  - Cost
+    - Need to pay for content delivery network, or static site as well as original server for API.
+  - Maintainability
+    - Needs two sets of developers (front end and back end) to communicate to deliver  a feature. Alternatively full stack engineers need to widen knowlege scope. 
+  - Security
+    - Need to implement greater controls to not trust user inputs from front end application 
+    
 --- 
 
 ## Tradeoff Discussion
