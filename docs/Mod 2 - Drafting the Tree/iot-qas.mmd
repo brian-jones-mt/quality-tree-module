@@ -1,0 +1,6 @@
+flowchart TD
+    A["Source: Central Management System"] --> B["Stimulus: Initiates firmware update for batch of devices"];
+    B --> C["Artifact: Group of 100 IoT devices (mixed models)"];
+    C --> D["Environment: Devices online, varying network conditions (Wi-Fi, Cellular)"];
+    D --> E["Response: All devices successfully update firmware"];
+    E --> F["Measure: 99.5% update success rate within 15 minutes; <0.01% device bricking"];

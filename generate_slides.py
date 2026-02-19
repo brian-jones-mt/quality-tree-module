@@ -158,6 +158,81 @@ def _setup_output_directories(src_path: Path, out_path: Path, styles_path: Path)
                     shutil.copy2(p, out_styles / p.name)
     return out_styles
 
+def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
+    """
+    Finds Mermaid files in src_dir, compiles them to PNG, and places them in out_dir.
+    Attempts to install `@mermaid-js/mermaid-cli` globally if `mmdc` command is not found.
+    """
+    mermaid_extensions = ('.mmd', '.mermaid')
+    
+    # Check if mmdc is available
+    try:
+        subprocess.run(['mmdc', '--version'], check=True, capture_output=True)
+    except FileNotFoundError:
+        print("Mermaid CLI (mmdc) not found. Attempting to install '@mermaid-js/mermaid-cli' globally using npm...")
+        try:
+            subprocess.run(['npm', 'install', '-g', '@mermaid-js/mermaid-cli'], check=True)
+            print("Mermaid CLI installed successfully.")
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            print(f"Failed to install Mermaid CLI: {e}")
+            print("Please ensure npm is installed and accessible in your PATH, or install '@mermaid-js/mermaid-cli' manually (e.g., 'npm install -g @mermaid-js/mermaid-cli').")
+            raise SystemExit(1)
+
+    for root, _, files in os.walk(src_dir):
+        for file in files:
+            if file.lower().endswith(mermaid_extensions):
+                src_path = Path(root) / file
+                # Construct relative path from src_dir
+                relative_path = src_path.relative_to(src_dir)
+                # Change extension to .png
+                dest_file_name = file.rsplit('.', 1)[0] + '.png'
+                dest_path = out_dir / relative_path.parent / dest_file_name
+                
+                # Create parent directories if they don't exist
+                dest_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                command = [
+                    'mmdc', # Use mmdc directly now that we've ensured it's installed
+                    '-i', str(src_path),
+                    '-o', str(dest_path)
+                ]
+                print(f"Compiling Mermaid: {' '.join(command)}")
+                try:
+                    # Capture output to prevent printing to stdout by run_shell_command
+                    result = subprocess.run(command, check=True, capture_output=True, text=True)
+                    print(f"Successfully compiled {src_path} to {dest_path}")
+                    if result.stdout:
+                        print(f"Mermaid-cli stdout: {result.stdout}")
+                    if result.stderr:
+                        print(f"Mermaid-cli stderr: {result.stderr}")
+                except subprocess.CalledProcessError as e:
+                    print(f"Failed to compile {src_path}: {e}")
+                    print(f"Mermaid-cli stdout: {e.stdout}")
+                    print(f"Mermaid-cli stderr: {e.stderr}")
+                    raise SystemExit(1)
+
+def _copy_images_to_output(src_dir: Path, out_dir: Path):
+    """
+    Copies image files from the source directory to the output directory,
+    maintaining the relative directory structure.
+    """
+    image_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp')
+    
+    for root, _, files in os.walk(src_dir):
+        for file in files:
+            if file.lower().endswith(image_extensions):
+                src_path = Path(root) / file
+                # Construct relative path from src_dir
+                relative_path = src_path.relative_to(src_dir)
+                # Construct destination path in out_dir
+                dest_path = out_dir / relative_path
+                
+                # Create parent directories if they don't exist
+                dest_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                shutil.copy2(src_path, dest_path)
+                print(f"Copied image: {src_path} to {dest_path}")
+
 
 def _process_module_slides(slides_file: Path, out_root_dir: Path, styles_output_dir: Path):
     """
@@ -236,69 +311,6 @@ def _generate_index_page(overview_file: Path, slides_files: list[Path], out_root
         print("No overview.md found; skipping central index generation.")
 
 
-def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
-    """
-    Finds Mermaid files in src_dir, compiles them to PNG, and places them in out_dir.
-    """
-    mermaid_extensions = ('.mmd', '.mermaid')
-    
-    for root, _, files in os.walk(src_dir):
-        for file in files:
-            if file.lower().endswith(mermaid_extensions):
-                src_path = Path(root) / file
-                # Construct relative path from src_dir
-                relative_path = src_path.relative_to(src_dir)
-                # Change extension to .png
-                dest_file_name = file.rsplit('.', 1)[0] + '.png'
-                dest_path = out_dir / relative_path.parent / dest_file_name
-                
-                # Create parent directories if they don't exist
-                dest_path.parent.mkdir(parents=True, exist_ok=True)
-                
-                command = [
-                    'npx', '-p', '@mermaid-js/mermaid-cli', 'mmdc',
-                    '-i', str(src_path),
-                    '-o', str(dest_path)
-                ]
-                print(f"Compiling Mermaid: {' '.join(command)}")
-                try:
-                    # Capture output to prevent printing to stdout by run_shell_command
-                    result = subprocess.run(command, check=True, capture_output=True, text=True)
-                    print(f"Successfully compiled {src_path} to {dest_path}")
-                    if result.stdout:
-                        print(f"Mermaid-cli stdout: {result.stdout}")
-                    if result.stderr:
-                        print(f"Mermaid-cli stderr: {result.stderr}")
-                except subprocess.CalledProcessError as e:
-                    print(f"Failed to compile {src_path}: {e}")
-                    print(f"Mermaid-cli stdout: {e.stdout}")
-                    print(f"Mermaid-cli stderr: {e.stderr}")
-                    raise SystemExit(1)
-
-
-def _copy_images_to_output(src_dir: Path, out_dir: Path):
-    """
-    Copies image files from the source directory to the output directory,
-    maintaining the relative directory structure.
-    """
-    image_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp')
-    
-    for root, _, files in os.walk(src_dir):
-        for file in files:
-            if file.lower().endswith(image_extensions):
-                src_path = Path(root) / file
-                # Construct relative path from src_dir
-                relative_path = src_path.relative_to(src_dir)
-                # Construct destination path in out_dir
-                dest_path = out_dir / relative_path
-                
-                # Create parent directories if they don't exist
-                dest_path.parent.mkdir(parents=True, exist_ok=True)
-                
-                shutil.copy2(src_path, dest_path)
-                print(f"Copied image: {src_path} to {dest_path}")
-
-
 def main():
     compile_sass()
     
@@ -316,7 +328,6 @@ def main():
         _process_module_slides(slides_file, OUTDIR, out_styles)
 
     _generate_index_page(SRC / 'overview.md', slides_files, OUTDIR)
-
 
 
 if __name__ == '__main__':

@@ -1,0 +1,28 @@
+flowchart LR
+  U["Utility"]
+  subgraph "Quality"
+    A["Performance"]
+    B["Scalability"]
+  end
+  subgraph "Refinement"
+    AA["Asset Loading Speed"]
+    BA["Load Test - Ramp"]
+    BB["Load Test - Steady State"]
+  end
+  subgraph "Scenario"
+    AAA["Largest contentful paint must occur within 2.5 seconds, High priority, High Dificulty"]
+    AAB["First page load must occur in 3 seconds, High priority, Medium Dificulty"]
+    BAA["Site must be able to respond to up to 5k requests /second in a ramp pattern with 99% of requests taking no more than 3 seconds per load, Medium priority, Medium Dificulty"]
+    BBA["Site must be able to respond to 1k requests / second for 48 hours. 99% of page loads should occur within 3s, Medium priority, Low Dificulty"]
+  end
+
+U --> A
+U --> B
+
+A --> AA
+AA --> AAA
+AA --> AAB
+B --> BA
+BA --> BAA
+B --> BB
+BB --> BBA

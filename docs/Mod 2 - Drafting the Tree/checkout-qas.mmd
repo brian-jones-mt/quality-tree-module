@@ -1,0 +1,6 @@
+flowchart TD
+    A["Source: Authenticated User"] --> B["Stimulus: Clicks 'Place Order'"];
+    B --> C["Artifact: Checkout Service"];
+    C --> D["Environment: Peak Load (1000 concurrent users)"];
+    D --> E["Response: Order processed"];
+    E --> F["Measure: End-to-end latency < 1.5 seconds (P99)"];

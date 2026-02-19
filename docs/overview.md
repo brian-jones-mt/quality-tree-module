@@ -58,6 +58,14 @@ You are probably too inexperienced if:
 
 ---
 
+## 🛠 Practical Usage
+
+- **Scope Creep Defense:** When a "shiny new feature" is requested, map it against a quality tree. If the feature hurts a **High-Priority Leaf**, you have a data-backed reason to push back.
+- **Onboarding:** A Quality Tree is the fastest way to show a new hire "what actually matters here" without reading 50 pages of outdated documentation.
+- **Defining "Done":** Link your Quality Tree leaves directly to your monitoring/alerting (Datadog/Prometheus/ELK stack) and automated load tests.
+
+---
+
 ## 📂 Module 1: The "Why" and the Anatomy
 
 **Goal:** Understand that "Quality" is a set of quantifiable trade-offs, not a binary state.
@@ -102,6 +110,7 @@ Participants rate each leaf on two scales:
 
 **The "High/High" Quadrant:** These are your **Architecturally Significant Requirements (ASRs)**. If you ignore these, the project fails.
 
+
 ---
 
 ## 📂 Module 4: Variants and Purposes
@@ -117,16 +126,6 @@ Participants rate each leaf on two scales:
 
 ---
 
-## 🛠 Practical Usages for Lead Developers
+## Module 5: Operationalizing the Tree
 
-* **Scope Creep Defense:** When a "shiny new feature" is requested, map it against the tree. If the feature hurts a **High-Priority Leaf** (e.g., Performance), you have a data-backed reason to push back.
-* **Onboarding:** A Quality Tree is the fastest way to show a new senior hire "what actually matters here" without reading 50 pages of outdated documentation.
-* **Defining "Done":** Link your Quality Tree leaves directly to your monitoring/alerting (Datadog/Prometheus) and automated load tests.
 
----
-
-> **Expert Tip:** A Quality Tree is only successful if it identifies a **conflict**. If your tree says "Security is #1" and "Speed is #1," you haven't made a tree—you've made a wish list. The tree exists to force the trade-off.
-
----
-
-**Would you like me to draft a "Mock Project Case Study" (e.g., a Fintech App or E-commerce site) to use as a hands-on exercise for Module 2?**

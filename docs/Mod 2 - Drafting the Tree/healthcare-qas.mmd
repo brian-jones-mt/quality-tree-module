@@ -1,0 +1,6 @@
+flowchart TD
+    A["Source: Unauthorized External User"] --> B["Stimulus: Attempts to access patient records"];
+    B --> C["Artifact: Electronic Health Record (EHR) System"];
+    C --> D["Environment: Public network, using common attack vectors (e.g., SQLi, XSS)"];
+    D --> E["Response: Access denied, attempt logged, no data breach"];
+    E --> F["Measure: 0 unauthorized access successes; detection and alert within 5 seconds"];

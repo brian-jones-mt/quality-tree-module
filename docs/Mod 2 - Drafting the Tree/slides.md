@@ -84,7 +84,7 @@ These four signals are a critical starting point for any monitoring strategy, he
 -   **Saturation:** How "full" your service is. (e.g., *How much capacity are we using? Are we nearly overloaded?*)
     -   *Good Saturation:* Healthy resource utilization.
     -   *Bad Saturation:* Resources (CPU, memory, network) at or near capacity, predicting future issues.
-    -   *Bad Saturation:* Resources are paid for, but nver used. 
+    -   *Bad Saturation:* Resources are paid for, but never used. 
 
 ---
 
@@ -117,7 +117,7 @@ Building a quality tree is not a one-time event, but an iterative process of dis
 
 Here are the key phases:
 
-1.  **Identify Primary Stakeholders:** Determine who cares most about the system's quality (users, operations, business, security).
+1.  **Identify Primary Stakeholders:** Determine who cares most about the system\'s quality (users, operations, business, security).
 2.  **Brainstorm Quality Attributes:** Start with high-level "-ilities" (e.g., Performance, Security, Usability, Maintainability).
 3.  **Refine Attributes into Sub-Attributes:** Break down broad attributes into more specific aspects (e.g., Performance -> Latency, Throughput).
 4.  **Draft Quality Attribute Scenarios (QAS):** Define concrete, measurable scenarios for each sub-attribute using the Stimulus-Response pattern.
@@ -135,16 +135,16 @@ Here are the key phases:
 Each leaf of your quality tree is a Quality Attribute Scenario (QAS) that answers:
 *"When X happens, under Y conditions, Z must occur, and we measure it by W."*
 
-Let's break down the Stimulus-Response pattern for a QAS:
+Let\'s break down the Stimulus-Response pattern for a QAS:
 
-1.  **Source:** (Who or what triggers the event?) e.g., *"An authenticated user"*, *"A malicious actor"*, *"The system's daily backup process"*
-2.  **Stimulus:** (What is the event or condition?) e.g., *"logs in"*, *"attempts SQL injection"*, *"runs at peak load"*
-3.  **Artifact:** (Which part of the system is affected?) e.g., *"the authentication service"*, *"the database"*, *"the entire application"*
-4.  **Environment:** (Under what conditions does this happen?) e.g., *"during normal operation"*, *"during a denial-of-service attack"*, *"with 10,000 concurrent users"*
-5.  **Response:** (What is the system's observable reaction?) e.g., *"responds within 2 seconds"*, *"blocks the attempt"*, *"maintains 99.9% availability"*
-6.  **Response Measure:** (How is the response measured?) e.g., *"end-to-end latency (P99)"*, *"error rate"*, *"number of successful transactions"*
+1.  **Source:** (Who or what triggers the event?) e.g., *\"An authenticated user\"*, *\"A malicious actor\"*, *\"The system\'s daily backup process\"*
+2.  **Stimulus:** (What is the event or condition?) e.g., *\"logs in\"*, *\"attempts SQL injection\"*, *\"runs at peak load\"*
+3.  **Artifact:** (Which part of the system is affected?) e.g., *\"the authentication service\"*, *\"the database\"*, *\"the entire application\"*
+4.  **Environment:** (Under what conditions does this happen?) e.g., *\"during normal operation\"*, *\"during a denial-of-service attack\"*, *\"with 10,000 concurrent users\"*
+5.  **Response:** (What is the system\'s observable reaction?) e.g., *\"responds within 2 seconds\"*, *\"blocks the attempt\"*, *\"maintains 99.9% availability\"*
+6.  **Response Measure:** (How is the response measured?) e.g., *\"end-to-end latency (P99)\"*, *\"error rate\"*, *\"number of successful transactions\"*
 
-**Example:** *"An authenticated user (Source) logs in (Stimulus) to the authentication service (Artifact) during normal operation (Environment). The service responds within 2 seconds (Response) measured by end-to-end latency (P99) (Response Measure)."*
+**Example:** *\"An authenticated user (Source) logs in (Stimulus) to the authentication service (Artifact) during normal operation (Environment). The service responds within 2 seconds (Response) measured by end-to-end latency (P99) (Response Measure).\"*
 
 ---
 
@@ -156,7 +156,7 @@ Let's break down the Stimulus-Response pattern for a QAS:
 
 **Instructions:**
 
-In your breakout rooms, choose ONE of the following scenarios (or propose your own) and draft **three complete Quality Attribute Scenarios (QAS)** using the **Stimulus-Response pattern** (Source, Stimulus, Artifact, Environment, Response, Response Measure).
+In your breakout rooms, choose **ONE** of the following scenarios (or propose your own) and draft **three** complete Quality Attribute Scenarios (QAS) using the **Stimulus-Response pattern** (Source, Stimulus, Artifact, Environment, Response, Response Measure).
 
 
 1.  **E-commerce Checkout:** A user completing a purchase.
@@ -172,14 +172,7 @@ In your breakout rooms, choose ONE of the following scenarios (or propose your o
 
 ### *Quality Scenario for User Purchase Latency*
 
-```mermaid
-flowchart TD
-    A[Source: Authenticated User] --> B{Stimulus: Clicks 'Place Order'};
-    B --> C[Artifact: Checkout Service];
-    C --> D{Environment: Peak Load (1000 concurrent users)};
-    D --> E[Response: Order processed];
-    E --> F[Measure: End-to-end latency < 1.5 seconds (P99)];
-```
+![Checkout QAS](checkout-qas.png)
 
 **Explanation:** This scenario focuses on the performance aspect (latency) of the e-commerce checkout under stressful conditions, defining a clear, measurable target.
 
@@ -189,14 +182,7 @@ flowchart TD
 
 ### *Quality Scenario for Live Stream Availability*
 
-```mermaid
-flowchart TD
-    A[Source: Any User] --> B{Stimulus: Attempts to watch live stream}; 
-    B --> C[Artifact: Streaming Playback Service];
-    C --> D{Environment: During major sporting event (high demand)};
-    D --> E[Response: Stream starts and plays without buffering];
-    E --> F[Measure: 99.99% availability for stream start; <0.1% re-buffering rate];
-```
+![Streaming QAS](streaming-qas.png)
 
 **Explanation:** This scenario addresses the critical availability and seamless playback experience for a live streaming service, especially during peak events.
 
@@ -206,14 +192,7 @@ flowchart TD
 
 ### *Quality Scenario for Firmware Update Reliability*
 
-```mermaid
-flowchart TD
-    A[Source: Central Management System] --> B{Stimulus: Initiates firmware update for batch of devices}; 
-    B --> C[Artifact: Group of 100 IoT devices (mixed models)];
-    C --> D{Environment: Devices online, varying network conditions (Wi-Fi, Cellular)};
-    D --> E[Response: All devices successfully update firmware];
-    E --> F[Measure: 99.5% update success rate within 15 minutes; <0.01% device bricking];
-```
+![IoT QAS](iot-qas.png)
 
 **Explanation:** This scenario prioritizes the reliability and success rate of critical firmware updates for IoT devices across diverse conditions, with safeguards against failure.
 
@@ -223,14 +202,7 @@ flowchart TD
 
 ### *Quality Scenario for Patient Data Security*
 
-```mermaid
-flowchart TD
-    A[Source: Unauthorized External User] --> B{Stimulus: Attempts to access patient records}; 
-    B --> C[Artifact: Electronic Health Record (EHR) System];
-    C --> D{Environment: Public network, using common attack vectors (e.g., SQLi, XSS)};
-    D --> E[Response: Access denied, attempt logged, no data breach];
-    E --> F[Measure: 0 unauthorized access successes; detection and alert within 5 seconds];
-```
+![Healthcare QAS](healthcare-qas.png)
 
 **Explanation:** This scenario highlights a critical security aspect for a healthcare system, focusing on preventing unauthorized access and ensuring data integrity and compliance.
 

@@ -268,6 +268,34 @@ To solidify your understanding of the Value/Impact Matrix and ASRs, we will now 
 
 ---
 
+## Breakout Room Activity: Prioritizing Quality Requirements
+
+### *Scenario: Online Retail Platform*
+
+**Objective:** Apply the Value/Impact Matrix to a set of quality requirements for a new online retail platform.
+
+**Instructions:**
+
+1.  **Form Groups:** Divide into small groups (3-4 participants).
+2.  **Review Requirements:** Each group will receive a list of 10-12 quality requirements for an online retail platform.
+3.  **Assess Value (H/M/L):** For each requirement, discuss and assign a Business Value (High, Medium, or Low). Be prepared to justify your reasoning.
+4.  **Assess Impact (H/M/L):** For each requirement, discuss and assign an Architectural Impact (High, Medium, or Low). Consider the effort, risk, and changes to core architecture.
+5.  **Plot on Matrix:** Categorize each requirement into one of the four quadrants of the Value/Impact Matrix (ASRs, Quick Wins, Deprioritize, Avoid).
+6.  **Identify ASRs:** Clearly identify which requirements your group considers Architecturally Significant Requirements.
+7.  **Prepare to Share:** Appoint a spokesperson to briefly present your group's top 2-3 ASRs and the reasoning behind their prioritization.
+
+**Time Allotment:** 20 minutes 
+
+---
+
+## Successful Trees are Trees
+
+-  A Quality Tree is only successful if it identifies a **conflict**. 
+- If your tree says "Security is #1" and "Speed is #1," you haven't made a tree—you've made a wish list. 
+- The tree exists to force the trade-off.
+
+---
+
 ## Summary & Key Takeaways
 
 *   **Prioritization is Key:** In resource-constrained environments, effective prioritization is crucial for architectural success.

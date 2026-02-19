@@ -145,4 +145,4 @@ The Refinement Process:
 
 - Scenario (The Leaf): "When a user on a 3G connection (Source/Stimulus) loads the homepage, the Largest Contentful Paint must occur within 2.5 seconds (Response)."
 
-![Pualities, lead to scenarios](images/quality-refinement-scenario.png)
+![Q=ualities, lead to scenarios](quality-refinement-scenario.png)
