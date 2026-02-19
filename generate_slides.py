@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Generate static Vue.js-based slide decks from slides.md files in docs directory."""
 import json
-import re
 import os
 import shutil
 import markdown
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -92,7 +92,7 @@ VUE_TEMPLATE = '''<!doctype html>
 
 def parse_markdown_to_html(markdown_text):
     """Convert markdown text to HTML using the markdown library."""
-    html = markdown.markdown(markdown_text, extensions=['extra', 'codehilite'])
+    html = markdown.markdown(markdown_text, extensions=['extra', 'codehilite', 'sane_lists'])
     return html
 
 
@@ -107,9 +107,6 @@ def generate_slides_html(title, slides_text):
     raw_slides = extract_slides(slides_text)
     html_slides = [parse_markdown_to_html(slide) for slide in raw_slides]
     return html_slides, json.dumps(html_slides)
-
-
-import subprocess
 
 def compile_sass():
     """Compile SCSS to CSS using the sass compiler. If sass is not found, attempt to install it."""
@@ -163,7 +160,7 @@ def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
     Finds Mermaid files in src_dir, compiles them to PNG, and places them in out_dir.
     Attempts to install `@mermaid-js/mermaid-cli` globally if `mmdc` command is not found.
     """
-    mermaid_extensions = ('.mmd', '.mermaid')
+    mermaid_extensions = ['.mmd', '.mermaid']
     
     # Check if mmdc is available
     try:
@@ -182,23 +179,18 @@ def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
         for file in files:
             if file.lower().endswith(mermaid_extensions):
                 src_path = Path(root) / file
-                # Construct relative path from src_dir
                 relative_path = src_path.relative_to(src_dir)
-                # Change extension to .png
                 dest_file_name = file.rsplit('.', 1)[0] + '.png'
                 dest_path = out_dir / relative_path.parent / dest_file_name
-                
-                # Create parent directories if they don't exist
                 dest_path.parent.mkdir(parents=True, exist_ok=True)
                 
                 command = [
-                    'mmdc', # Use mmdc directly now that we've ensured it's installed
+                    'mmdc', 
                     '-i', str(src_path),
                     '-o', str(dest_path)
                 ]
                 print(f"Compiling Mermaid: {' '.join(command)}")
                 try:
-                    # Capture output to prevent printing to stdout by run_shell_command
                     result = subprocess.run(command, check=True, capture_output=True, text=True)
                     print(f"Successfully compiled {src_path} to {dest_path}")
                     if result.stdout:
@@ -232,6 +224,83 @@ def _copy_images_to_output(src_dir: Path, out_dir: Path):
                 
                 shutil.copy2(src_path, dest_path)
                 print(f"Copied image: {src_path} to {dest_path}")
+
+
+def _standardize_list_indentation(src_dir: Path):
+    """
+    Standardizes list indentation in markdown files to use multiples of 4 spaces.
+    If a list item has leading whitespace that is not a multiple of 4, it will be
+    adjusted to the next higher multiple of 4.
+    """
+    for md_file in src_dir.glob('**/*.md'):
+        if md_file.is_file():
+            content = md_file.read_text(encoding='utf-8')
+            new_content_lines = []
+            for line in content.splitlines():
+                stripped_line = line.lstrip()
+                if stripped_line.startswith(('-', '*')):
+                    # It's a list item
+                    current_indent = len(line) - len(stripped_line)
+                    
+                    if current_indent % 4 != 0:
+                        # Adjust to the next higher multiple of 4
+                        desired_indent = (current_indent // 4 + 1) * 4
+                        new_line = ' ' * desired_indent + stripped_line
+                        new_content_lines.append(new_line)
+                    else:
+                        new_content_lines.append(line)
+                else:
+                    new_content_lines.append(line)
+            
+            new_content = "\n".join(new_content_lines)
+            if new_content != content:
+                md_file.write_text(new_content, encoding='utf-8')
+                print(f"Standardized list indentation in: {md_file}")
+
+
+def _run_markdown_linting(src_dir: Path):
+    """
+    Runs markdownlint-cli2 on all markdown files in the source directory.
+    Installs markdownlint-cli2 globally if not found.
+    """
+    # Check if markdownlint-cli2 is available
+    try:
+        subprocess.run(['markdownlint-cli2', '--version'], check=True, capture_output=True)
+    except FileNotFoundError:
+        print("markdownlint-cli2 not found. Attempting to install 'markdownlint-cli2' globally using npm...")
+        try:
+            subprocess.run(['npm', 'install', '-g', 'markdownlint-cli2'], check=True)
+            print("markdownlint-cli2 installed successfully.")
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            print(f"Failed to install markdownlint-cli2: {e}")
+            print("Please ensure npm is installed and accessible in your PATH, or install 'markdownlint-cli2' manually (e.g., 'npm install -g markdownlint-cli2').")
+            raise SystemExit(1)
+
+    print(f"Running markdownlint-cli2 on {src_dir}...")
+    try:
+        # Run markdownlint-cli2 on all markdown files
+        # The glob pattern needs to be expanded by the shell, so we use shell=True
+        # It's generally safer to pass commands as a list, but for glob patterns
+        # that need shell expansion, shell=True is often necessary.
+        # Ensure 'check=False' so that a non-zero exit code (linting errors) doesn't raise an exception
+        result = subprocess.run(
+            ['markdownlint-cli2', str(src_dir / '**/*.md')],
+            check=False,
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0:
+            print("Markdown Linting Issues Found:")
+            print(result.stdout)
+            print(result.stderr)
+            # Depending on desired strictness, we might want to exit here
+            # For now, just report, don't exit.
+        else:
+            print("Markdown linting passed.")
+        
+    except Exception as e:
+        print(f"An error occurred during markdownlint-cli2 execution: {e}")
+        raise SystemExit(1)
 
 
 def _process_module_slides(slides_file: Path, out_root_dir: Path, styles_output_dir: Path):
@@ -315,6 +384,8 @@ def main():
     compile_sass()
     
     out_styles = _setup_output_directories(SRC, OUTDIR, ROOT / 'styles')
+    _standardize_list_indentation(SRC)
+    _run_markdown_linting(SRC)
     _compile_mermaid_diagrams(SRC, OUTDIR)
     _copy_images_to_output(SRC, OUTDIR)
 
