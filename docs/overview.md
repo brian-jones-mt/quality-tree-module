@@ -127,5 +127,3 @@ Participants rate each leaf on two scales:
 ---
 
 ## Module 5: Operationalizing the Tree
-
-

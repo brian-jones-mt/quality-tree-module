@@ -17,8 +17,8 @@
 By the end of this module, you will be able to:
 
 - **Evaluate** each quality requirement on two dimensions:
-  - Business Value (High / Medium / Low)
-  - Architectural Impact (High / Medium / Low)
+    - Business Value (High / Medium / Low)
+    - Architectural Impact (High / Medium / Low)
 - **Identify** Architecturally Significant Requirements (ASRs) in the High/High quadrant
 - **Explain** why ASRs are the only requirements that matter for architecture
 - **Defend** architectural decisions using data-backed priority matrices

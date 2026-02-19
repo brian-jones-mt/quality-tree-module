@@ -19,9 +19,9 @@ By the end of this module, you will be able to:
 - **Define** quality attributes and understand they are not binary states
 - **Identify** vague requirements and reframe them into measurable criteria
 - **Explain** the three-layer structure of quality attributes:
-  - Quality Attribute (e.g., Performance)
-  - Attribute Refinement (e.g., Latency vs. Throughput)
-  - Quality Attribute Scenario (concrete, measurable event)
+    - Quality Attribute (e.g., Performance)
+    - Attribute Refinement (e.g., Latency vs. Throughput)
+    - Quality Attribute Scenario (concrete, measurable event)
 - **Recognize** architectural debt hidden in vague language
 - **Distinguish** between wishes and achievable architectural goals
 
@@ -102,22 +102,22 @@ As an example:
 Splitting a C# MVC webside into a front end angular app, and a back end ASP.Net API
 
 - Improves 
-  - Maintainability
-    - Front end developers can add features quicker
-  - Performance
-    - Server does less work generating full HTML page
-    - less data to transfer between front end and back end      
-    - Front end application can be cached as part of a content delivery network, inproving first load speed
-  - Scalability
-    - Since front end app is essentially a static site which passes smaller requests, back end can deal with more requests.
-    - Back end scaling should be less required.
+    - Maintainability
+        - Front end developers can add features quicker
+    - Performance
+        - Server does less work generating full HTML page
+        - less data to transfer between front end and back end      
+        - Front end application can be cached as part of a content delivery network, inproving first load speed
+    - Scalability
+        - Since front end app is essentially a static site which passes smaller requests, back end can deal with more requests.
+        - Back end scaling should be less required.
 - Degrades
-  - Cost
-    - Need to pay for content delivery network, or static site as well as original server for API.
-  - Maintainability
-    - Needs two sets of developers (front end and back end) to communicate to deliver  a feature. Alternatively full stack engineers need to widen knowlege scope. 
-  - Security
-    - Need to implement greater controls to not trust user inputs from front end application 
+    - Cost
+        - Need to pay for content delivery network, or static site as well as original server for API.
+    - Maintainability
+        - Needs two sets of developers (front end and back end) to communicate to deliver  a feature. Alternatively full stack engineers need to widen knowlege scope. 
+    - Security
+        - Need to implement greater controls to not trust user inputs from front end application 
     
 --- 
 

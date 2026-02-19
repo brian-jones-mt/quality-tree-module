@@ -17,10 +17,10 @@
 By the end of this module, you will be able to:
 
 - **Identify** four distinct quality tree variants:
-  - Utility Tree (ATAM) for tech-business alignment
-  - Risk-Storming Tree for failure scenario identification
-  - Security/Compliance Tree for regulated industries
-  - Maintenance Tree for long-term cost assessment
+    - Utility Tree (ATAM) for tech-business alignment
+    - Risk-Storming Tree for failure scenario identification
+    - Security/Compliance Tree for regulated industries
+    - Maintenance Tree for long-term cost assessment
 - **Select** the right variant for your project stage and business context
 - **Combine** multiple trees to cover different stakeholder concerns
 - **Understand** when a single tree is insufficient and a portfolio approach is needed

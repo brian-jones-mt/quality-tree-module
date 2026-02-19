@@ -34,22 +34,22 @@ By the end of this module, you will be able to:
 As a lead developer responsible for delivery, you will face:
 
 - **"Are we actually meeting our SLAs?"** 
-  - Without monitoring, you don't know
+    - Without monitoring, you don't know
 - **"The code is done, why can't we ship?"** 
-  - because you haven't defined "done"
+    - because you haven't defined "done"
 - **"Performance regressed"** 
-  - because there's no automated gate preventing it
+    - because there's no automated gate preventing it
 - **"Our architecture is degrading"** 
-  - because quality metrics aren't tracked over time
+    - because quality metrics aren't tracked over time
 - **"What should the product team prioritize next?"** 
-  - roadmaps without architectural context make bad choices
+    - roadmaps without architectural context make bad choices
 
 **This module closes the loop from design intent to operational reality.**
 
 By operationalizing your quality tree 
 — connecting it to 
-  - CI/CD pipelines, 
-  - alerts, 
-  - roadmap planning
+    - CI/CD pipelines, 
+    - alerts, 
+    - roadmap planning
   
 You transform it from a theoretical exercise into an active guard against architectural decay. You'll know in real-time whether your system is living up to its architectural promises.

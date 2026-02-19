@@ -93,15 +93,15 @@ These four signals are a critical starting point for any monitoring strategy, he
 *6 minute discussion, breakout rooms 1 question per group*
 
 - Your application has a function with high latency. Its not preventing login, or first page load. 
-  - Other than speeding up the processing, what else might work?
+    - Other than speeding up the processing, what else might work?
 - Your application has an endpoint with a large number of 4xx responses.
-  - In terms of your application, are these good or bad errors?
-  - What should you do about these?
+    - In terms of your application, are these good or bad errors?
+    - What should you do about these?
 - How can your application tell the difference between *good* and *bad* throughput.
-  - What can your application do about this?
+    - What can your application do about this?
 - As an application development team, how do you normally use these signals.
 - Saturation is how full your service is. You are designing a dashboard to report on saturation of a resource (CPU, memory). 
-  - Describe how the element should look to generate the information a (senior manager / CTO / Client) needs. 
+    - Describe how the element should look to generate the information a (senior manager / CTO / Client) needs. 
 
 
 
