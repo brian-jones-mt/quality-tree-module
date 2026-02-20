@@ -1,0 +1,31 @@
+---
+title: Security/Compliance Tree (Control Centric)
+---
+flowchart LR
+
+    Root["Root: Regulatory Compliance"]
+    subgraph Goals
+        Goal1["Protect Personal Data (e.g. GDPR)"]
+        Goal2["Prove Compliance (Auditability)"]
+    end
+    subgraph Attributes
+        Attr1["Data Privacy Controls"]
+        Attr2["Access Control"]
+        Attr3["Audit Logging"]
+    end
+    subgraph Scenarios
+        Leaf1["PII encrypted at rest (AES-256 or equivalent)"]
+        Leaf2["Privileged access via RBAC with least privilege"]
+        Leaf3["All admin actions immutable and retained for 7 years"]
+    end
+
+    Root --> Goal1
+    Root --> Goal2
+
+    Goal1 --> Attr1
+    Goal1 --> Attr2
+    Goal2 --> Attr3
+
+    Attr1 --> Leaf1
+    Attr2 --> Leaf2
+    Attr3 --> Leaf3

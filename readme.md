@@ -1,45 +1,114 @@
-# Quality Tree Training
+# 🌳 Quality Tree Training Workshop
 
-This repository contains a reusable training package to aid understanding of the quality tree process. The target audience is senior and lead engineers, Tech Leads, and aspiring architects.
+This repository contains a reusable training package designed to help senior engineers, tech leads, and aspiring architects understand and apply the **Quality Tree** process for defining and measuring software quality attributes.
 
-The output of this is a series of slide decks and resources for use in training, generated from Markdown files in the `docs` directory.
+## 🎯 What is a Quality Tree?
 
-How to generate and preview the slide decks
------------------------------------------
+Quality is not a binary state; it's a set of trade-offs. A Quality Tree is a hierarchical tool used to:
+- **Translate** vague stakeholder wishes ("fast," "secure," "scalable") into **measurable architectural requirements**.
+- **Defend** architectural choices with data instead of opinions.
+- **Prioritize** development effort by identifying **Architecturally Significant Requirements (ASRs)**.
+
+## 🎓 Audience
+
+- **Senior/Lead Engineers:** Looking to lead architectural discussions and lock down requirements before coding.
+- **Architects:** Seeking a structured framework for facilitating quality-driven discovery.
+- **Aspiring Architects:** Wanting to move from "building features" to "designing systems."
+
+## 📅 Workshop Structure
+
+The training is divided into six modular sessions:
+
+- **Module 0: Introduction** — Why Quality Trees matter and setting the stage.
+- **Module 1: The Anatomy of Quality** — Breaking down "Vague Requirements" into "Hard Metrics."
+- **Module 2: Drafting the Tree** — Mastering the Stimulus-Response methodology.
+- **Module 3: Prioritization & Impact** — Using the (Value / Effort) Matrix to find what truly matters.
+- **Module 4: Variants & Evolution** — Risk-Storming, Security, and Maintenance trees.
+- **Module 5: Operationalizing the Tree** — Integration with CI/CD and Product Roadmaps.
+
+---
+
+## 🛠 Getting Started
+
+### Prerequisites
+
+1.  **Python 3.8+**
+2.  **[uv](https://github.com/astral-sh/uv)** (Highly recommended for dependency management)
+3.  **Node.js & npm** (Required for compiling Mermaid diagrams)
+4.  Optional: **PlantUML** CLI or Java + `plantuml.jar` (for local PlantUML rendering). If not available, the build will use the Kroki API.
 
 ### 1. Install Dependencies
 
-This project uses `uv` for environment and package management. Install the required dependencies:
+This project uses `uv` for lightning-fast environment management.
 
 ```bash
-uv pip install -r requirements.txt
+# Install Python dependencies
+uv sync
+
+# The slide generator will automatically attempt to install 'sass' 
+# and '@mermaid-js/mermaid-cli' via npm if they are missing.
 ```
-*(Note: If `requirements.txt` does not exist, you may need to install them manually: `uv pip install markdown python-markdown-math Pygments`)*
 
 ### 2. Generate the Slides
 
-Generate the HTML slide decks from the `slides.md` files in the `docs` directory:
+The content is written in Markdown and converted into an interactive Vue.js slide deck.
 
 ```bash
 uv run python3 generate_slides.py
 ```
 
-This will create a `dist` directory containing the generated HTML files, organized by module.
+This script performs the following:
+- Compiles `styles/main.scss` to CSS.
+- Converts all `.mmd` / `.mermaid` files in `docs/` to SVG images.
+- Converts all PlantUML files (`.puml`, `.plantuml`, `.uml`, `.iuml`) in `docs/` to SVG images.
+  - Prefers local PlantUML CLI or `PLANTUML_JAR`; otherwise falls back to the Kroki cloud renderer.
+- Generates HTML slide decks for each module in the `dist/` directory.
+- Creates a central `index.html` linking all modules.
 
 ### 3. Preview the Slides
 
-Open the main index file to see the list of modules:
+Open the generated index in your browser:
 
 ```bash
+# macOS
 open dist/index.html
+
+# Linux
+xdg-open dist/index.html
 ```
 
-Or open a specific module directly:
+---
 
-```bash
-open "dist/Mod 1 - Anatomy of Quality/index.html"
-```
+## 📂 Project Structure
 
-Notes:
-- The repository is configured with a GitHub Actions workflow `.github/workflows/deploy.yml` that runs `generate_slides.py` on push and deploys the `dist/` folder to GitHub Pages.
-- The slides are built using a Vue.js template in `generate_slides.py`. You can edit the template there to change the layout or style of the slides.
+- `docs/`: Contains the Markdown source for all modules.
+    - Each module has its own directory with a `slides.md` file.
+    - Mermaid diagrams (`.mmd`) are stored alongside the slides.
+- `styles/`: SASS files for slide styling.
+- `generate_slides.py`: The build engine that converts Markdown to Vue.js slides.
+- `.github/workflows/deploy.yml`: Automatically deploys the slides to GitHub Pages on every push to `main`.
+
+## ✍️ Customizing Content
+
+### Adding/Editing Slides
+Edit the `slides.md` file within the relevant module directory. Use `---` on a new line to separate slides.
+
+### Adding Diagrams
+- Mermaid: create a `.mmd` (or `.mermaid`) file in the module directory. The build script will compile it to an `.svg` in the mirrored `dist/` folder. Reference it from slides with:
+`![Description](diagram-name.svg)`
+- PlantUML: create a `.puml` / `.plantuml` / `.uml` / `.iuml` file in the module directory. The build script will compile it to an `.svg` in the mirrored `dist/` folder. Reference it from slides with:
+`![Description](diagram-name.svg)`
+  - Tip: set `PLANTUML_JAR=/path/to/plantuml.jar` to force local rendering if the `plantuml` CLI is not installed.
+
+### Linting
+A `.markdownlint.json` file is provided to maintain consistent formatting. It is configured for 4-space indentation and ignores line-length rules to accommodate long slide content.
+
+---
+
+## 🚀 Deployment
+
+The project is configured for **GitHub Pages**. Any changes pushed to the `main` branch will be automatically built and deployed.
+
+## ⚖️ License
+
+This project is not licensed, it is the property of Made Tech. However it is publicly available under githubs terms of service. Contributions and suggestions are welcomed. Any contributions become the property of Made Tech.

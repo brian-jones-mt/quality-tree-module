@@ -15,6 +15,9 @@ The main technologies used are:
 -   **uv:** For environment and package management.
 -   **GitHub Actions:** For CI/CD to GitHub Pages.
 
+
+Check and adhere to `agents.md` also
+
 ## Building and Running
 
 ### 1. Install Dependencies

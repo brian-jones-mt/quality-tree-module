@@ -1,0 +1,31 @@
+---
+title: Maintenance Tree (Developer Centric)
+---
+flowchart LR
+
+    Root["Root: Total Cost of Ownership (TCO)"]
+    subgraph Goals
+        Goal1["Increase Developer Velocity"]
+        Goal2["Reduce Operational Drag"]
+    end
+    subgraph Attributes
+        Attr1["Delivery Flow"]
+        Attr2["Observability & Diagnostics"]
+        Attr3["Safe Release Mechanisms"]
+    end
+    subgraph Scenarios
+        Leaf1["PR open-to-merge < 24h (median)"]
+        Leaf2["MTTR < 30 mins for sev-2 incidents"]
+        Leaf3["Automated rollback triggers at 5% error-rate spike"]
+    end
+
+    Root --> Goal1
+    Root --> Goal2
+
+    Goal1 --> Attr1
+    Goal2 --> Attr2
+    Goal2 --> Attr3
+
+    Attr1 --> Leaf1
+    Attr2 --> Leaf2
+    Attr3 --> Leaf3

@@ -157,11 +157,11 @@ def _setup_output_directories(src_path: Path, out_path: Path, styles_path: Path)
 
 def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
     """
-    Finds Mermaid files in src_dir, compiles them to PNG, and places them in out_dir.
+    Finds Mermaid files in src_dir, compiles them to SVG, and places them in out_dir.
     Attempts to install `@mermaid-js/mermaid-cli` globally if `mmdc` command is not found.
     """
     mermaid_extensions = ('.mmd', '.mermaid')
-    
+
     # Check if mmdc is available
     try:
         subprocess.run(['mmdc', '--version'], check=True, capture_output=True)
@@ -180,183 +180,174 @@ def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
             if file.lower().endswith(mermaid_extensions):
                 src_path = Path(root) / file
                 relative_path = src_path.relative_to(src_dir)
-                dest_file_name = file.rsplit('.', 1)[0] + '.png'
+                dest_file_name = file.rsplit('.', 1)[0] + '.svg'
                 dest_path = out_dir / relative_path.parent / dest_file_name
                 dest_path.parent.mkdir(parents=True, exist_ok=True)
-                
+
                 command = [
-                    'mmdc', 
+                    'mmdc',
                     '-i', str(src_path),
                     '-o', str(dest_path)
-                ]
-                print(f"Compiling Mermaid: {' '.join(command)}")
+]
+
                 try:
-                    result = subprocess.run(command, check=True, capture_output=True, text=True)
-                    print(f"Successfully compiled {src_path} to {dest_path}")
-                    if result.stdout:
-                        print(f"Mermaid-cli stdout: {result.stdout}")
-                    if result.stderr:
-                        print(f"Mermaid-cli stderr: {result.stderr}")
+                    subprocess.run(command, check=True)
+                    print(f"Compiled Mermaid: {src_path} -> {dest_path}")
                 except subprocess.CalledProcessError as e:
-                    print(f"Failed to compile {src_path}: {e}")
-                    print(f"Mermaid-cli stdout: {e.stdout}")
-                    print(f"Mermaid-cli stderr: {e.stderr}")
+                    print(f"Error compiling Mermaid diagram {src_path}: {e}")
                     raise SystemExit(1)
 
-def _copy_images_to_output(src_dir: Path, out_dir: Path):
+                try:
+                    subprocess.run(command, check=True)
+                    print(f"Compiled Mermaid: {src_path} -> {dest_path}")
+                except subprocess.CalledProcessError as e:
+                    print(f"Error compiling Mermaid diagram {src_path}: {e}")
+                    raise SystemExit(1)
+
+
+def _compile_plantuml_diagrams(src_dir: Path, out_dir: Path):
     """
-    Copies image files from the source directory to the output directory,
-    maintaining the relative directory structure.
+    Finds PlantUML files in src_dir, compiles them to SVG, and places them in out_dir.
+    Supported extensions: .puml, .plantuml, .uml, .iuml
+    Prefers the local `plantuml` CLI if available; falls back to Kroki cloud rendering otherwise.
+    To force local JAR usage, set env var PLANTUML_JAR to a path to plantuml.jar.
     """
-    image_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp')
-    
+    import shutil as _shutil
+    import urllib.request
+    import urllib.error
+
+    exts = ('.puml', '.plantuml', '.uml', '.iuml')
+
+    def _have(cmd: str) -> bool:
+        return _shutil.which(cmd) is not None
+
+    plantuml_cli = None
+    plantuml_jar = os.environ.get('PLANTUML_JAR')
+
+    if plantuml_jar and Path(plantuml_jar).exists():
+        plantuml_cli = ('java', '-jar', plantuml_jar)
+    elif _have('plantuml'):
+        plantuml_cli = ('plantuml',)
+
     for root, _, files in os.walk(src_dir):
         for file in files:
-            if file.lower().endswith(image_extensions):
-                src_path = Path(root) / file
-                relative_path = src_path.relative_to(src_dir)
-                dest_path = out_dir / relative_path
-                dest_path.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src_path, dest_path)
-                print(f"Copied image: {src_path} to {dest_path}")
+            if not file.lower().endswith(exts):
+                continue
+            src_path = Path(root) / file
+            relative_path = src_path.relative_to(src_dir)
+            dest_file_name = file.rsplit('.', 1)[0] + '.svg'
+            dest_path = out_dir / relative_path.parent / dest_file_name
+            dest_path.parent.mkdir(parents=True, exist_ok=True)
 
-
-def _run_markdown_linting(src_dir: Path):
-    """
-    Runs markdownlint-cli2 on all markdown files in the source directory.
-    Installs markdownlint-cli2 globally if not found.
-    """
-    # Check if markdownlint-cli2 is available
-    try:
-        subprocess.run(['markdownlint-cli2', '--version'], check=True, capture_output=True)
-    except FileNotFoundError:
-        print("markdownlint-cli2 not found. Attempting to install 'markdownlint-cli2' globally using npm...")
-        try:
-            subprocess.run(['npm', 'install', '-g', 'markdownlint-cli2'], check=True)
-            print("markdownlint-cli2 installed successfully.")
-        except (subprocess.CalledProcessError, FileNotFoundError) as e:
-            print(f"Failed to install markdownlint-cli2: {e}")
-            print("Please ensure npm is installed and accessible in your PATH, or install 'markdownlint-cli2' manually (e.g., 'npm install -g markdownlint-cli2').")
-            raise SystemExit(1)
-
-    print(f"Running markdownlint-cli2 on {src_dir}...")
-    try:
-        result = subprocess.run(
-            ['markdownlint-cli2',  "--fix", str(src_dir / '**/*.md')],
-            check=False,
-            capture_output=True,
-            text=True
-        )
-        if result.returncode != 0:
-            print("Markdown Linting Issues Found:")
-            print(result.stdout)
-            print(result.stderr)
-            # Depending on desired strictness, we might want to exit here
-            # For now, just report, don't exit.
-        else:
-            print("Markdown linting passed.")
-        
-    except Exception as e:
-        print(f"An error occurred during markdownlint-cli2 execution: {e}")
-        raise SystemExit(1)
-
-
-def _process_module_slides(slides_file: Path, out_root_dir: Path, styles_output_dir: Path):
-    """
-    Processes a single slides.md file, generates its HTML, and writes it to the output directory.
-    """
-    rel_path = slides_file.relative_to(SRC)
-    module_dir = slides_file.parent
-    module_name = module_dir.name
-    
-    markdown_content = slides_file.read_text(encoding='utf-8')
-    
-    html_slides, slides_json = generate_slides_html(module_name, markdown_content)
-    
-    out_module_dir = out_root_dir / module_name
-    out_module_dir.mkdir(parents=True, exist_ok=True)
-    
-    css_rel = os.path.relpath(styles_output_dir / 'main.css', start=out_module_dir)
-
-    html_output = VUE_TEMPLATE.format(
-      title=module_name,
-      slides_json=slides_json,
-      css_path=css_rel.replace('\\\\', '/')
-    )
-    
-    out_file = out_module_dir / "index.html"
-    out_file.write_text(html_output, encoding='utf-8')
-    print(f"Generated {out_file}")
+            if plantuml_cli:
+                # Use local PlantUML to render SVG directly to our destination
+                try:
+                    # Many plantuml CLIs support: -tsvg -pipe. We'll use -pipe to control output path.
+                    proc = subprocess.run(
+                        list(plantuml_cli) + ['-tsvg', '-pipe'],
+                        check=True,
+                        input=src_path.read_text(encoding='utf-8').encode('utf-8'),
+                        capture_output=True
+                    )
+                    dest_path.write_bytes(proc.stdout)
+                    print(f"Compiled PlantUML (local): {src_path} -> {dest_path}")
+                except subprocess.CalledProcessError as e:
+                    print(f"Error compiling PlantUML diagram {src_path} with local CLI: {e}")
+                    raise SystemExit(1)
+            else:
+                # Fallback to Kroki cloud rendering
+                try:
+                    req = urllib.request.Request(
+                        url='https://kroki.io/plantuml/svg',
+                        data=src_path.read_text(encoding='utf-8').encode('utf-8'),
+                        headers={'Content-Type': 'text/plain; charset=utf-8'},
+                        method='POST'
+                    )
+                    with urllib.request.urlopen(req, timeout=30) as resp:
+                        svg = resp.read()
+                        dest_path.write_bytes(svg)
+                        print(f"Compiled PlantUML (kroki): {src_path} -> {dest_path}")
+                except (urllib.error.URLError, urllib.error.HTTPError) as e:
+                    print(f"Failed to render PlantUML via Kroki for {src_path}: {e}")
+                    print("Consider installing PlantUML locally or setting PLANTUML_JAR.")
+                    raise SystemExit(1)
 
 
 
-def _generate_index_page(overview_file: Path, slides_files: list[Path], out_root_dir: Path):
-    """
-    Generates the central index page from overview.md.
-    """
-    if overview_file.exists():
-        overview_md = overview_file.read_text(encoding='utf-8')
-        overview_html = parse_markdown_to_html(overview_md)
-
-        # Build module links from generated module dirs
-        module_links = []
-        for slides_file in sorted(slides_files):
-            module_dir = slides_file.parent
-            module_name = module_dir.name
-            # link to module_name/index.html (URL-encode spaces)
-            href = f"{module_name.replace(' ', '%20')}/index.html"
-            module_links.append(f'<li><a href="{href}">{module_name}</a></li>')
-
-        links_html = '<ul>\n' + '\n'.join(module_links) + '\n</ul>' if module_links else ''
-
-        INDEX_TEMPLATE = f'''<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quality Tree — Overview</title>
-    <link rel="stylesheet" href="styles/main.css">
-  </head>
-  <body>
-    <div id="app">
-      <div class="slide-container">
-        <main style="padding:40px; max-width:980px; margin:auto;">
-          {overview_html}
-          <h2 style="margin-top:24px;">Modules</h2>
-          {links_html}
-        </main>
-      </div>
-    </div>
-  </body>
-</html>
-'''
-
-        index_out = out_root_dir / 'index.html'
-        index_out.write_text(INDEX_TEMPLATE, encoding='utf-8')
-        print(f"Generated central index at {index_out}")
-    else:
-        print("No overview.md found; skipping central index generation.")
-
-
-def main():
+def _build_all():
+    # 1) Compile styles
+    styles_src = ROOT / 'styles'
     compile_sass()
-    
-    out_styles = _setup_output_directories(SRC, OUTDIR, ROOT / 'styles')
-    _run_markdown_linting(SRC)
+
+    # 2) Prepare output directories and copy styles
+    out_styles = _setup_output_directories(SRC, OUTDIR, styles_src)
+
+    # 3) Precompile diagrams (Mermaid + PlantUML) into OUTDIR mirror
     _compile_mermaid_diagrams(SRC, OUTDIR)
-    _copy_images_to_output(SRC, OUTDIR)
+    _compile_plantuml_diagrams(SRC, OUTDIR)
 
-    slides_files = list(SRC.glob('**/slides.md'))
-    
-    if not slides_files:
-        print("No slides.md files found in docs directory.")
-        raise SystemExit(1)
+    # 4) Generate slides for each module (each docs/*/slides.md)
+    index_entries = []
+    for module_dir in sorted(SRC.iterdir()):
+        if not module_dir.is_dir():
+            continue
+        slides_md = module_dir / 'slides.md'
+        if not slides_md.exists():
+            # allow nested subfolders containing slides
+            for sub in module_dir.rglob('slides.md'):
+                rel = sub.relative_to(SRC).parent
+                title = f"{rel}"
+                _emit_module(slides_path=sub, module_rel_dir=rel, title=str(title))
+                index_entries.append((str(rel), f"{OUTDIR}/{rel}/index.html"))
+            continue
+        rel = slides_md.parent.relative_to(SRC)
+        title = f"{rel}"
+        _emit_module(slides_path=slides_md, module_rel_dir=rel, title=str(title))
+        index_entries.append((str(rel), f"{OUTDIR}/{rel}/index.html"))
 
-    for slides_file in sorted(slides_files):
-        _process_module_slides(slides_file, OUTDIR, out_styles)
+    _emit_index(index_entries)
 
-    _generate_index_page(SRC / 'overview.md', slides_files, OUTDIR)
+
+def _emit_module(slides_path: Path, module_rel_dir: Path, title: str):
+    out_module_dir = OUTDIR / module_rel_dir
+    out_module_dir.mkdir(parents=True, exist_ok=True)
+
+    slides_text = slides_path.read_text(encoding='utf-8')
+    html_slides, slides_json = generate_slides_html(title, slides_text)
+
+    # Determine CSS path relative to module dir
+    css_rel_path = Path('..') / 'styles' / 'main.css'
+    html = VUE_TEMPLATE.format(title=title, slides_json=slides_json, css_path=str(css_rel_path))
+
+    (out_module_dir / 'index.html').write_text(html, encoding='utf-8')
+
+
+def _emit_index(entries):
+    index_html = [
+        '<!doctype html>',
+        '<html lang="en">',
+        '<head>',
+        '  <meta charset="utf-8">',
+        '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+        '  <title>Quality Tree Slides</title>',
+        f'  <link rel="stylesheet" href="styles/main.css">',
+        '</head>',
+        '<body>',
+        '  <div class="index">',
+        '    <h1>Quality Tree Module Slides</h1>',
+        '    <ul>'
+    ]
+    for name, href in sorted(entries):
+        rel = Path(href).relative_to(OUTDIR)
+        index_html.append(f'      <li><a href="{rel}">{name}</a></li>')
+    index_html += [
+        '    </ul>',
+        '  </div>',
+        '</body>',
+        '</html>'
+    ]
+    (OUTDIR / 'index.html').write_text('\n'.join(index_html), encoding='utf-8')
 
 
 if __name__ == '__main__':
-    main()
+    _build_all()

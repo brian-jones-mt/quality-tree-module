@@ -1,0 +1,31 @@
+---
+title: Risk-Storming Tree (Failure Centric)
+---
+flowchart LR
+
+    Root["Root: System Resilience"]
+    subgraph Goals
+        Goal1["Avoid Catastrophic Data Loss"]
+        Goal2["Minimise Customer Impact"]
+    end
+    subgraph Attributes
+        Attr1["Database Integrity"]
+        Attr2["Service Availability"]
+        Attr3["Operational Recovery"]
+    end
+    subgraph Scenarios
+        Leaf1["RPO <= 5 mins for critical data (validated backups)"]
+        Leaf2["Regional failover completes in < 60s"]
+        Leaf3["RTO <= 15 mins for core user journeys"]
+    end
+
+    Root --> Goal1
+    Root --> Goal2
+
+    Goal1 --> Attr1
+    Goal2 --> Attr2
+    Goal2 --> Attr3
+
+    Attr1 --> Leaf1
+    Attr2 --> Leaf2
+    Attr3 --> Leaf3

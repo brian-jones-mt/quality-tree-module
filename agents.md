@@ -36,6 +36,14 @@ All slide decks (slides.md files) must follow these rules:
 - Third slide contains the "why" - reasoning for learning this content
 - Follow with additional content slides as needed
 
+### Images
+
+Images should be co-located in the same folder as the slides.md file they are associated with.
+Images should be referenced using relative paths.
+
+images can be created using mermaid files which will be converted into appropriate files for inclusion in the generation script.
+plant uml images may also be included using the extension `.puml`.
+
 ## Output
 
 The output of this repository should be:

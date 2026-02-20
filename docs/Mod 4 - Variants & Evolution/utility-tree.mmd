@@ -1,0 +1,32 @@
+---
+title: Utility Tree (Business Centric)
+---
+flowchart LR
+
+    Root["Root: Business Success"]
+    subgraph Goals
+        Goal1["Market Leadership"]
+        Goal2["Low Operational Cost"]
+    end
+    subgraph Attributes
+    Attr1["Performance"]
+    Attr2["Scalability"]
+    Attr3["Maintainability"]
+    end
+    subgraph Scenarios
+    Leaf1["Search returns in <500ms under normal load"]
+    Leaf2["Handle 10x traffic spike without manual intervention"]
+    Leaf3["New feature deployment takes <2 hours"]
+    end
+
+    Root --> Goal1
+    Root --> Goal2
+    
+    Goal1 --> Attr1
+    Goal1 --> Attr2
+    Goal2 --> Attr3
+    
+    Attr1 --> Leaf1
+    Attr2 --> Leaf2
+    Attr3 --> Leaf3
+

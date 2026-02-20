@@ -68,6 +68,25 @@ Using the wrong tree variant means you'll optimize for the wrong things. A Finte
 
 ---
 
+## Utility Tree: High-Level Process
+
+**1. Identify Business Goals:** What does "winning" look like for the business? (e.g., "Market Leadership")
+**2. Select Quality Attributes:** Which technical 'ilities' support these goals? (e.g., "Availability")
+**3. Refine into Scenarios:** Break down attributes into concrete, measurable QAS.
+**4. Prioritize by Value:** Focus on what drives the most business impact.
+
+**Outcome:** A direct map from CEO-level goals to engineering-level performance targets.
+
+---
+
+## Utility Tree: Visualizing Alignment
+
+![Utility Tree Diagram](utility-tree.svg)
+
+**Key Difference:** Unlike a general quality tree, the **Utility Tree's root is a Business Goal**, not just a technical category. This forces architects to justify EVERY requirement against a business outcome.
+
+---
+
 ## The Risk-Storming Tree
 
 - **Primary Purpose:** Proactively identifying and mitigating potential "Black Swan" failures and high-impact risks that could derail a project or system.
@@ -77,6 +96,25 @@ Using the wrong tree variant means you'll optimize for the wrong things. A Finte
     - **High-Impact Systems:** Where failure has severe financial, reputational, or safety consequences.
 - **Key Focus Areas:** Catastrophic failure modes, security breaches, data loss, severe performance degradation, regulatory non-compliance.
 - **Example Scenario:** Migrating a critical legacy banking system. A Risk-Storming Tree would focus on data integrity during migration, transaction consistency, and rollback mechanisms.
+
+---
+
+## Risk-Storming Tree: High-Level Process
+
+**1. Identify Assets/Functions:** What is the most critical part of the system? (e.g., "Database")
+**2. Brainstorm Risks:** What could break it? (e.g., "Corruption," "Network Split")
+**3. Assess Impact:** If it breaks, how bad is the damage? (e.g., "1 hour of data loss")
+**4. Define Mitigation Scenarios:** What is the specific recovery target? (e.g., "RTO < 15 mins")
+
+**Outcome:** A prioritized list of "Fail-Safe" requirements and recovery SLAs.
+
+---6
+
+## Risk-Storming Tree: Visualizing Resilience
+
+![Risk-Storming Tree Diagram](risk-storming-tree.svg)
+
+**Key Difference:** A quality tree focuses on *success* ("be fast"), while a **Risk-Storming Tree focuses on *surviving failure*** ("recover quickly"). The leaves are often RTO/RPO targets.
 
 ---
 
@@ -92,6 +130,25 @@ Using the wrong tree variant means you'll optimize for the wrong things. A Finte
 
 ---
 
+## Security Tree: High-Level Process
+
+**1. Select Regulatory Standard:** What is the law/policy? (e.g., "GDPR")
+**2. Identify Control Categories:** What broad protections are needed? (e.g., "Data Privacy")
+**3. Implement Technical Controls:** What specific tech solves it? (e.g., "AES-256")
+**4. Define Verification Scenarios:** How do we prove we are compliant?
+
+**Outcome:** An audit-ready map showing exactly how the architecture satisfies legal mandates.
+
+---
+
+## Security Tree: Visualizing Compliance
+
+![Security/Compliance Tree Diagram](security-compliance-tree.svg)
+
+**Key Difference:** The root and branches are driven by **external mandates (laws/audits)** rather than internal preferences. Leaves represent *guarantees* that can be audited.
+
+---
+
 ## The Maintenance Tree
 
 - **Primary Purpose:** Assessing and optimizing the long-term total cost of ownership (TCO), focusing on maintainability, extensibility, and operational efficiency.
@@ -101,6 +158,27 @@ Using the wrong tree variant means you'll optimize for the wrong things. A Finte
     - **Long-Lived Systems:** Systems expected to operate and evolve over many years.
 - **Key Focus Areas:** Code readability, test coverage, modularity, ease of deployment, monitoring and logging, incident response efficiency, documentation.
 - **Example Scenario:** An internal enterprise resource planning (ERP) system. A Maintenance Tree would prioritize clear APIs, comprehensive test suites, and robust logging to reduce future operational costs.
+
+---
+
+## Maintenance Tree: High-Level Process
+
+**1. Identify Lifecycle Drivers:** What slows us down? (e.g., "Onboarding," "Deploying")
+**2. Define Efficiency Metrics:** How do we measure the friction? (e.g., "Lead Time")
+**3. Set Strategic Targets:** What is a healthy score? (e.g., "Merge PR in < 24h")
+**4. Map to Architectural Fixes:** What change in code/process achieves this?
+
+**Outcome:** A roadmap for reducing technical debt and increasing developer velocity.
+
+---
+
+## Maintenance Tree: Visualizing TCO
+
+![Maintenance Tree Diagram](maintenance-tree.svg)
+
+**Key Difference:** The primary stakeholder is the **Engineering Team**. It focuses on *internal quality* (maintainability) which is usually invisible to end-users until it's too late.
+
+---
 
 ---
 
@@ -114,6 +192,10 @@ Using the wrong tree variant means you'll optimize for the wrong things. A Finte
 - **Analyze Your Industry & Business Context:** What are the non-negotiables for your domain?
 - **Identify Core Architectural Challenges:** What keeps your architects up at night?
 - **Assess Team Maturity & Resources:** Can your team effectively implement and maintain the chosen focus?
+- **However:** The right variant is contextual and depends on your project's stage, team maturity, and industry regulations.
+    - Feel free to jam and mix them up.
+    - There are no rules.
+
 
 ---
 
