@@ -1,5 +1,7 @@
 # Module 3: Prioritization & Impact Assessment
 
+![Module 3 Overview](module-3-mindmap.svg)
+
 ---
 
 ## Prioritization and Impact Assessment

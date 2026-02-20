@@ -1,5 +1,7 @@
 # Module 1: The Anatomy of Quality
 
+![Module 1 Overview](module-1-mindmap.svg)
+
 ---
 
 ## The Anatomy of Quality

@@ -1,5 +1,7 @@
 # Module 2: Drafting the Tree
 
+![Module 2 Overview](module-2-mindmap.svg)
+
 ---
 
 ## Drafting the Tree (Practical)
@@ -53,7 +55,7 @@ To make a tree usable, every "Leaf" must follow this formula:
 **Example Scenario:**
 
 - **Bad:** "The checkout should be fast."
-- **Good:** "Under a 500% spike in concurrent users (Stimulus), the checkout service must process transactions in  seconds (Response) with  data loss."
+- **Good:** "(Source) Under a 500% spike in concurrent users (Stimulus), the checkout service must process transactions in  seconds (Response) with no data loss."
 
 ---
 
@@ -85,6 +87,27 @@ These four signals are a critical starting point for any monitoring strategy, he
     - *Good Saturation:* Healthy resource utilization.
     - *Bad Saturation:* Resources (CPU, memory, network) at or near capacity, predicting future issues.
     - *Bad Saturation:* Resources are paid for, but never used.
+
+---
+
+## Availability: Not a golden Signal
+
+But very useful to monitor!
+
+### Availability
+
+- The percentage of time your service is available to users.
+- The percentage of requests that recived a response other than a 5xx error.
+
+Could be measured by:
+- **Pinging service**: a service pings your endpoint and returns a response.
+    - Data provided by third party, verifiable for SLa, builds trust in your service.
+    - Is not sensitive to your users needs, do your users care if the site is not available when they are not using it.
+  
+- **Monitoring service responses**: Monitoring whenever your service is down, and returns a 500 response.
+    - If your logging service was down, how will you know if your site was up or down?
+    - Is sensitive to your users needs, 
+        - Do your users care if the ping worked, but they can't access your site as everyone in the south east is trying to log in at the same time?
 
 ---
 

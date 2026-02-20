@@ -1,5 +1,7 @@
 # Module 4: Variants & Evolution
 
+![Module 4 Overview](module-4-mindmap.svg)
+
 ---
 
 ## Variants and Purposes

@@ -8,6 +8,8 @@
 
 - [Brian Jones :octocat:](https://github.com/brian-jones-mt/quality-tree-module)
 
+![Overview](intro-overview.svg)
+
 ---
 
 ## Welcome to the Workshop
@@ -20,6 +22,8 @@
 
 **Audience:** Lead Developers, Architects, Engineering Leaders
 
+![Workshop Journey](workshop-journey.svg)
+
 ---
 
 ## Learning Objectives
@@ -31,6 +35,8 @@ By the end of this introduction, you will understand:
 - **The core problem** this workshop solves: translating vague requirements into architectural decisions
 - **What you'll be able to do** after today's workshop
 - **The structure** of our 8-hour journey and how the modules build on each other
+
+![Learning Objectives](learning-objectives.svg)
 
 ---
 
@@ -53,3 +59,5 @@ This workshop teaches you to:
 4. **Protect** the architecture from scope creep and impossible requests
 
 By the end of today, you'll have a framework that turns vague business speak into concrete architectural decisions.
+
+![From Vague to Concrete](vague-to-concrete.svg)
