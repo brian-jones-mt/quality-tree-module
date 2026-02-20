@@ -1,6 +1,6 @@
 # 🌳 Workshop: Quality-Driven Architecture
 
-### *Using Quality Trees to Measure Project Impact*
+## *Using Quality Trees to Measure Project Impact*
 
 **Trainer:** Lead Developer Expert
 
@@ -31,13 +31,14 @@ By the end of today, you'll leave with a practical Quality Tree that you can app
 
 ## Audience
 
-**Leading Engineer** - A senior Engineer, Lead Engineer, and aspiring Architect. 
+**Leading Engineer** - A senior Engineer, Lead Engineer, and aspiring Architect.
 
 In this series of presentation a "leading engineer" covers Engineers with a number of job titles. This could also be relevant to people who use Architects as an insight into architectural thinking.
 
 ### Should I leave this alone?
 
 You are probably too inexperienced if:
+
 - You have not deployed an application as part of a solution.
 - You have not wanted to yell at an architect at some point in your career.
 
@@ -70,13 +71,12 @@ You are probably too inexperienced if:
 
 **Goal:** Understand that "Quality" is a set of quantifiable trade-offs, not a binary state.
 
-* **The Problem:** Why phrases like *"The system must be scalable"* are architectural debt in disguise.
-* **The Structure:**
+- **The Problem:** Why phrases like *"The system must be scalable"* are architectural debt in disguise.
+- **The Structure:**
+
 1. **Quality Attribute:** (e.g., Performance, Security, Availability).
 2. **Attribute Refinement:** (e.g., Latency vs. Throughput).
 3. **Quality Attribute Scenario (The "Leaf"):** A concrete, measurable event.
-
-
 
 ---
 
@@ -92,8 +92,8 @@ To make a tree usable, every "Leaf" must follow this formula:
 
 **Example Scenario:**
 
-* **Bad:** "The checkout should be fast."
-* **Good:** "Under a 500% spike in concurrent users (Stimulus), the checkout service must process transactions in  seconds (Response) with  data loss."
+- **Bad:** "The checkout should be fast."
+- **Good:** "Under a 500% spike in concurrent users (Stimulus), the checkout service must process transactions in  seconds (Response) with  data loss."
 
 ---
 
@@ -109,7 +109,6 @@ Participants rate each leaf on two scales:
 2. **Architectural Impact (H/M/L):** How much code/infrastructure must change to achieve this?
 
 **The "High/High" Quadrant:** These are your **Architecturally Significant Requirements (ASRs)**. If you ignore these, the project fails.
-
 
 ---
 

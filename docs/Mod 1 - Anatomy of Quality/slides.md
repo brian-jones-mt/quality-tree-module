@@ -52,14 +52,12 @@ Discussion: When we deliver a quality product - What did we do?
 
 ## Architectural Characteristics
 
-
-
 <div class="reveal-list">
   <ul>
     <li onclick="this.classList.toggle('revealed')">
       <span class="initial">A</span>
       <span class="full-text">vailability - Can users access this when they want it?</span>
-    </li>    
+    </li>
     <li onclick="this.classList.toggle('revealed')">
       <span class="initial">P</span>
       <span class="full-text">erformance - Has your app done the thing fast enopugh to satisfy the user</span>
@@ -91,7 +89,7 @@ Discussion: When we deliver a quality product - What did we do?
   </ul>
 </div>
 
---- 
+---
 
 ## Tradeoffs
 
@@ -101,12 +99,12 @@ As an example:
 
 Splitting a C# MVC webside into a front end angular app, and a back end ASP.Net API
 
-- Improves 
+- Improves
     - Maintainability
         - Front end developers can add features quicker
     - Performance
         - Server does less work generating full HTML page
-        - less data to transfer between front end and back end      
+        - less data to transfer between front end and back end
         - Front end application can be cached as part of a content delivery network, inproving first load speed
     - Scalability
         - Since front end app is essentially a static site which passes smaller requests, back end can deal with more requests.
@@ -115,17 +113,17 @@ Splitting a C# MVC webside into a front end angular app, and a back end ASP.Net 
     - Cost
         - Need to pay for content delivery network, or static site as well as original server for API.
     - Maintainability
-        - Needs two sets of developers (front end and back end) to communicate to deliver  a feature. Alternatively full stack engineers need to widen knowlege scope. 
+        - Needs two sets of developers (front end and back end) to communicate to deliver  a feature. Alternatively full stack engineers need to widen knowlege scope.
     - Security
-        - Need to implement greater controls to not trust user inputs from front end application 
-    
---- 
+        - Need to implement greater controls to not trust user inputs from front end application
+
+---
 
 ## Tradeoff Discussion
 
-*Group discussion - 6 mins = one question each*
+*Group discussion - 6 mins => one question each group*
 
-What characteristics being traded off in the following scenarios:
+What characteristics are being traded off in the following scenarios:
 
 - Moving from an on-premise to a cloud deployment of a MVC web app
 - Breaking a single microservice out of a monolith
@@ -135,6 +133,7 @@ What characteristics being traded off in the following scenarios:
 ---
 
 ## 🔍 Quality Refinement: Moving Down the Tree
+
 To make these characteristics usable, we must refine them. A development team doesn't build "Performance"; they build "Low Latency" or "High Throughput."
 
 The Refinement Process:

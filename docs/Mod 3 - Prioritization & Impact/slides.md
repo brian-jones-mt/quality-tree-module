@@ -46,10 +46,10 @@ By mapping every requirement to the Value/Impact matrix, you can say "no" to the
 
 ## The Challenge of Prioritization
 
-*   **Limited Resources:** Time, budget, and engineering capacity are finite.
-*   **Conflicting Demands:** Stakeholders often have competing priorities.
-*   **Vague Requirements:** "Make it fast" or "make it secure" don't help in decision-making.
-*   **Technical Debt:** Prioritizing incorrectly can lead to long-term architectural issues.
+- **Limited Resources:** Time, budget, and engineering capacity are finite.
+- **Conflicting Demands:** Stakeholders often have competing priorities.
+- **Vague Requirements:** "Make it fast" or "make it secure" don't help in decision-making.
+- **Technical Debt:** Prioritizing incorrectly can lead to long-term architectural issues.
 
 **Goal:** Move from subjective opinions to objective, data-driven decisions.
 
@@ -57,11 +57,11 @@ By mapping every requirement to the Value/Impact matrix, you can say "no" to the
 
 ## Introducing the Value/Impact Matrix
 
-*   **A Simple Tool, Powerful Insights:** A 2x2 grid for evaluating requirements.
-*   **Two Key Dimensions:**
-    *   **Business Value:** How important is this to the user, customer, or business goals?
-    *   **Architectural Impact:** How much effort, risk, and change does this require for the architecture?
-*   **Purpose:** To clearly visualize trade-offs and identify the most critical items.
+- **A Simple Tool, Powerful Insights:** A 2x2 grid for evaluating requirements.
+- **Two Key Dimensions:**
+    - **Business Value:** How important is this to the user, customer, or business goals?
+    - **Architectural Impact:** How much effort, risk, and change does this require for the architecture?
+- **Purpose:** To clearly visualize trade-offs and identify the most critical items.
 
 ---
 
@@ -88,12 +88,12 @@ quadrantChart
 
 ## Defining "Business Value" (H/M/L)
 
-*   **High Value:** Directly impacts critical business outcomes (e.g., revenue, user acquisition, legal compliance, competitive advantage). Failure to deliver has significant negative consequences.
-    *   *Examples:* Core payment functionality, user login, critical data privacy features.
-*   **Medium Value:** Important for user satisfaction, efficiency, or non-critical business processes.
-    *   *Examples:* Advanced search filters, detailed analytics dashboards, minor UI/UX improvements.
-*   **Low Value:** "Nice-to-have" features, minor improvements, or internal tooling with limited impact.
-    *   *Examples:* Cosmetic UI changes, niche reporting features, highly specialized internal scripts.
+- **High Value:** Directly impacts critical business outcomes (e.g., revenue, user acquisition, legal compliance, competitive advantage). Failure to deliver has significant negative consequences.
+    - *Examples:* Core payment functionality, user login, critical data privacy features.
+- **Medium Value:** Important for user satisfaction, efficiency, or non-critical business processes.
+    - *Examples:* Advanced search filters, detailed analytics dashboards, minor UI/UX improvements.
+- **Low Value:** "Nice-to-have" features, minor improvements, or internal tooling with limited impact.
+    - *Examples:* Cosmetic UI changes, niche reporting features, highly specialized internal scripts.
 
 **How to Assess:** Consult product owners, business analysts, and user research.
 
@@ -101,12 +101,12 @@ quadrantChart
 
 ## Defining "Architectural Impact" (H/M/L)
 
-*   **High Impact:** Requires significant changes to core architectural components, infrastructure, data models, or introduces new complex technologies/dependencies. High risk of introducing bugs or performance regressions.
-    *   *Examples:* Migrating to a new database, re-architecting a microservice, integrating a new third-party payment gateway.
-*   **Medium Impact:** Involves changes within existing architectural boundaries but may require moderate refactoring, new service endpoints, or significant testing.
-    *   *Examples:* Adding a new API endpoint, extending an existing service with new business logic, minor database schema changes.
-*   **Low Impact:** Can be implemented with minimal changes to the existing codebase or infrastructure. Low risk.
-    *   *Examples:* UI text changes, adding a new field to an existing form, small bug fixes within a single component.
+- **High Impact:** Requires significant changes to core architectural components, infrastructure, data models, or introduces new complex technologies/dependencies. High risk of introducing bugs or performance regressions.
+    - *Examples:* Migrating to a new database, re-architecting a microservice, integrating a new third-party payment gateway.
+- **Medium Impact:** Involves changes within existing architectural boundaries but may require moderate refactoring, new service endpoints, or significant testing.
+    - *Examples:* Adding a new API endpoint, extending an existing service with new business logic, minor database schema changes.
+- **Low Impact:** Can be implemented with minimal changes to the existing codebase or infrastructure. Low risk.
+    - *Examples:* UI text changes, adding a new field to an existing form, small bug fixes within a single component.
 
 **How to Assess:** Consult architects, senior developers, and infrastructure teams.
 
@@ -116,12 +116,13 @@ quadrantChart
 
 ### *The "Maybe Later" or "Delete" Quadrant*
 
-*   **Characteristics:** Low importance, easy to implement.
-*   **Action:**
-    *   **Deprioritize:** These should be at the bottom of the backlog.
-    *   **Re-evaluate:** Is it truly low value, or is there a hidden benefit?
-    *   **Delete:** If it offers no significant return, don't waste any resources on it.
-*   **Pitfall:** Can become "busy work" that consumes resources without delivering real value.
+- **Characteristics:** Low importance, easy to implement.
+- **Action:**
+    - **Deprioritize:** These should be at the bottom of the backlog.
+    - **Re-evaluate:** Is it truly low value, or is there a hidden benefit?
+    - **Delete:** If it offers no significant return, don't waste any resources on it.
+- **Pitfall:** Can become "busy work" that consumes resources without delivering real value.
+
 ```mermaid
 quadrantChart
   title "Value / Impact Matrix"
@@ -136,18 +137,19 @@ quadrantChart
   Low_Value_High_Impact: [0.8, 0.2]
   High_Value_High_Impact: [0.8, 0.8]
 ```
+
 ---
 
 ## The Matrix Quadrants: High Value / Low Impact
 
 ### *The "Quick Wins" Quadrant*
 
-*   **Characteristics:** High importance, easy to implement.
-*   **Action:**
-    *   **Prioritize Immediately:** These deliver maximum value for minimal effort.
-    *   **Capture Momentum:** Completing these builds confidence and demonstrates progress.
-    *   **Watch Out:** Ensure the "low impact" assessment is accurate and doesn't hide future technical debt.
-*   **Examples:** Performance optimizations requiring minor code changes, critical bug fixes with clear solutions, small but impactful UX improvements.
+- **Characteristics:** High importance, easy to implement.
+- **Action:**
+    - **Prioritize Immediately:** These deliver maximum value for minimal effort.
+    - **Capture Momentum:** Completing these builds confidence and demonstrates progress.
+    - **Watch Out:** Ensure the "low impact" assessment is accurate and doesn't hide future technical debt.
+- **Examples:** Performance optimizations requiring minor code changes, critical bug fixes with clear solutions, small but impactful UX improvements.
 
 ```mermaid
 quadrantChart
@@ -170,12 +172,12 @@ quadrantChart
 
 ### *The "Avoid" or "Re-evaluate" Quadrant*
 
-*   **Characteristics:** Low importance, difficult to implement.
-*   **Action:**
-    *   **Strongly Avoid:** These are resource sinks that deliver little return.
-    *   **Question Relentlessly:** Why is this being considered? What is the real underlying need?
-    *   **Seek Alternatives:** Can the business goal be met with a lower-impact solution?
-*   **Pitfall:** Can be driven by a single stakeholder's pet project or a misunderstanding of architectural costs. These are often where "death by a thousand tiny cuts" begins.
+- **Characteristics:** Low importance, difficult to implement.
+- **Action:**
+    - **Strongly Avoid:** These are resource sinks that deliver little return.
+    - **Question Relentlessly:** Why is this being considered? What is the real underlying need?
+    - **Seek Alternatives:** Can the business goal be met with a lower-impact solution?
+- **Pitfall:** Can be driven by a single stakeholder's pet project or a misunderstanding of architectural costs. These are often where "death by a thousand tiny cuts" begins.
 
 ```mermaid
 quadrantChart
@@ -198,13 +200,13 @@ quadrantChart
 
 ### *Architecturally Significant Requirements (ASRs)*
 
-*   **Characteristics:** Critical business value, high architectural changes required.
-*   **Action:**
-    *   **Top Priority:** These are the foundational elements of your system.
-    *   **Careful Design:** Require significant architectural planning, design reviews, and often proof-of-concepts.
-    *   **Dedicated Resources:** Allocate experienced engineers and sufficient time.
-*   **These are your "Innovation Tokens":** Where you spend your most valuable architectural effort.
-*   **Ignoring them leads to project failure.**
+- **Characteristics:** Critical business value, high architectural changes required.
+- **Action:**
+    - **Top Priority:** These are the foundational elements of your system.
+    - **Careful Design:** Require significant architectural planning, design reviews, and often proof-of-concepts.
+    - **Dedicated Resources:** Allocate experienced engineers and sufficient time.
+- **These are your "Innovation Tokens":** Where you spend your most valuable architectural effort.
+- **Ignoring them leads to project failure.**
 
 ```mermaid
 quadrantChart
@@ -220,45 +222,46 @@ quadrantChart
   Low_Value_High_Impact: [0.8, 0.2]
   High_Value_High_Impact: [0.8, 0.8]
 ```
+
 ---
 
 ## Deep Dive: Understanding ASRs
 
-*   **Definition:** Requirements that have a direct and profound impact on the system's architecture. They shape the fundamental structure, technologies, and patterns.
-*   **Not Just Features:** ASRs often relate to quality attributes (performance, security, scalability, reliability, maintainability) rather than specific functional features.
-*   **Examples:**
-    *   "The system must handle 1 million concurrent users with <100ms response time." (Performance, Scalability)
-    *   "All user data must be encrypted at rest and in transit using AES-256." (Security)
-    *   "The system must maintain 99.999% uptime with no more than 5 minutes of downtime per year." (Availability)
+- **Definition:** Requirements that have a direct and profound impact on the system's architecture. They shape the fundamental structure, technologies, and patterns.
+- **Not Just Features:** ASRs often relate to quality attributes (performance, security, scalability, reliability, maintainability) rather than specific functional features.
+- **Examples:**
+    - "The system must handle 1 million concurrent users with <100ms response time." (Performance, Scalability)
+    - "All user data must be encrypted at rest and in transit using AES-256." (Security)
+    - "The system must maintain 99.999% uptime with no more than 5 minutes of downtime per year." (Availability)
 
 ---
 
 ## Working with ASRs
 
-*   **Architectural Ownership:** ASRs are primarily the responsibility of architects and lead developers.
-*   **Early Engagement:** Identify and address ASRs early in the project lifecycle.
-*   **Design & Validation:** Document architectural decisions, run performance tests, security audits, and load tests specifically for ASRs.
-*   **Iterative Approach:** Break down large ASRs into smaller, manageable spikes or phases.
+- **Architectural Ownership:** ASRs are primarily the responsibility of architects and lead developers.
+- **Early Engagement:** Identify and address ASRs early in the project lifecycle.
+- **Design & Validation:** Document architectural decisions, run performance tests, security audits, and load tests specifically for ASRs.
+- **Iterative Approach:** Break down large ASRs into smaller, manageable spikes or phases.
 
 ---
 
 ## Facilitating the Matrix Discussion
 
-*   **Neutral Facilitator:** Guide the discussion without imposing personal bias.
-*   **Diverse Group:** Include product, engineering, QA, and operations representatives.
-*   **Clear Definitions:** Ensure everyone understands "High/Medium/Low" for both dimensions.
-*   **Focus on Trade-offs:** Encourage honest conversations about costs and benefits.
-*   **Visualize:** Use whiteboards, sticky notes, or digital tools to build the matrix collaboratively.
+- **Neutral Facilitator:** Guide the discussion without imposing personal bias.
+- **Diverse Group:** Include product, engineering, QA, and operations representatives.
+- **Clear Definitions:** Ensure everyone understands "High/Medium/Low" for both dimensions.
+- **Focus on Trade-offs:** Encourage honest conversations about costs and benefits.
+- **Visualize:** Use whiteboards, sticky notes, or digital tools to build the matrix collaboratively.
 
 ---
 
 ## Communicating Prioritization Decisions
 
-*   **Visual Representation:** Present the Value/Impact Matrix to stakeholders.
-*   **Data-Backed Justification:** Explain *why* certain items are prioritized or deprioritized.
-*   **Manage Expectations:** Clearly communicate what will be delivered and when, and what won't.
-*   **Highlight ASRs:** Emphasize the critical architectural investments being made.
-*   **Iterate:** The matrix is a living document and should be reviewed periodically.
+- **Visual Representation:** Present the Value/Impact Matrix to stakeholders.
+- **Data-Backed Justification:** Explain *why* certain items are prioritized or deprioritized.
+- **Manage Expectations:** Clearly communicate what will be delivered and when, and what won't.
+- **Highlight ASRs:** Emphasize the critical architectural investments being made.
+- **Iterate:** The matrix is a living document and should be reviewed periodically.
 
 ---
 
@@ -276,31 +279,31 @@ To solidify your understanding of the Value/Impact Matrix and ASRs, we will now 
 
 **Instructions:**
 
-1.  **Form Groups:** Divide into small groups (3-4 participants).
-2.  **Review Requirements:** Each group will receive a list of 10-12 quality requirements for an online retail platform.
-3.  **Assess Value (H/M/L):** For each requirement, discuss and assign a Business Value (High, Medium, or Low). Be prepared to justify your reasoning.
-4.  **Assess Impact (H/M/L):** For each requirement, discuss and assign an Architectural Impact (High, Medium, or Low). Consider the effort, risk, and changes to core architecture.
-5.  **Plot on Matrix:** Categorize each requirement into one of the four quadrants of the Value/Impact Matrix (ASRs, Quick Wins, Deprioritize, Avoid).
-6.  **Identify ASRs:** Clearly identify which requirements your group considers Architecturally Significant Requirements.
-7.  **Prepare to Share:** Appoint a spokesperson to briefly present your group's top 2-3 ASRs and the reasoning behind their prioritization.
+1. **Form Groups:** Divide into small groups (3-4 participants).
+2. **Review Requirements:** Each group will receive a list of 10-12 quality requirements for an online retail platform.
+3. **Assess Value (H/M/L):** For each requirement, discuss and assign a Business Value (High, Medium, or Low). Be prepared to justify your reasoning.
+4. **Assess Impact (H/M/L):** For each requirement, discuss and assign an Architectural Impact (High, Medium, or Low). Consider the effort, risk, and changes to core architecture.
+5. **Plot on Matrix:** Categorize each requirement into one of the four quadrants of the Value/Impact Matrix (ASRs, Quick Wins, Deprioritize, Avoid).
+6. **Identify ASRs:** Clearly identify which requirements your group considers Architecturally Significant Requirements.
+7. **Prepare to Share:** Appoint a spokesperson to briefly present your group's top 2-3 ASRs and the reasoning behind their prioritization.
 
-**Time Allotment:** 20 minutes 
+**Time Allotment:** 20 minutes
 
 ---
 
 ## Successful Trees are Trees
 
--  A Quality Tree is only successful if it identifies a **conflict**. 
-- If your tree says "Security is #1" and "Speed is #1," you haven't made a tree—you've made a wish list. 
+- A Quality Tree is only successful if it identifies a **conflict**.
+- If your tree says "Security is #1" and "Speed is #1," you haven't made a tree—you've made a wish list.
 - The tree exists to force the trade-off.
 
 ---
 
 ## Summary & Key Takeaways
 
-*   **Prioritization is Key:** In resource-constrained environments, effective prioritization is crucial for architectural success.
-*   **Value/Impact Matrix:** A powerful, visual tool for evaluating requirements based on Business Value and Architectural Impact.
-*   **ASRs are Foundational:** High Value / High Impact items (ASRs) are the Architecturally Significant Requirements that demand early, careful attention and significant resources.
-*   **Avoid Low Value / High Impact:** These are project killers.
-*   **Embrace High Value / Low Impact:** Quick wins build momentum.
-*   **Communicate Visually:** Use the matrix to drive conversations and align stakeholders.
+- **Prioritization is Key:** In resource-constrained environments, effective prioritization is crucial for architectural success.
+- **Value/Impact Matrix:** A powerful, visual tool for evaluating requirements based on Business Value and Architectural Impact.
+- **ASRs are Foundational:** High Value / High Impact items (ASRs) are the Architecturally Significant Requirements that demand early, careful attention and significant resources.
+- **Avoid Low Value / High Impact:** These are project killers.
+- **Embrace High Value / Low Impact:** Quick wins build momentum.
+- **Communicate Visually:** Use the matrix to drive conversations and align stakeholders.

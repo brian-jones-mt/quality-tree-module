@@ -6,6 +6,6 @@ A fast-growing FinTech startup, "AlgoTrade Pro," is developing a new high-freque
 
 ## Questions
 
-1.  Which quality tree variant(s) should AlgoTrade Pro prioritize for their initial MVP phase?
-2.  Justify your choice(s) based on the project's context, referring to the module's content.
-3.  How might their quality tree priorities evolve as the platform matures?
+1. Which quality tree variant(s) should AlgoTrade Pro prioritize for their initial MVP phase?
+2. Justify your choice(s) based on the project's context, referring to the module's content.
+3. How might their quality tree priorities evolve as the platform matures?
