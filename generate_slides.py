@@ -6,6 +6,7 @@ import shutil
 import markdown
 import subprocess
 from pathlib import Path
+from jinja2 import Environment, FileSystemLoader
 
 ROOT = Path(__file__).parent
 SRC = ROOT / "docs"
@@ -102,9 +103,17 @@ def extract_slides(markdown_text):
     return [slide.strip() for slide in slides if slide.strip()]
 
 
-def generate_slides_html(title, slides_text):
-    """Convert slides markdown to HTML format."""
-    raw_slides = extract_slides(slides_text)
+def _render_markdown_with_jinja(text: str, search_paths):
+    """Render raw Markdown text through Jinja to allow includes/partials."""
+    env = Environment(loader=FileSystemLoader(search_paths), autoescape=False)
+    template = env.from_string(text)
+    return template.render()
+
+
+def generate_slides_html(title, slides_text, search_paths=None):
+    """Convert slides markdown to HTML format (after Jinja preprocessing)."""
+    processed = _render_markdown_with_jinja(slides_text, search_paths or [])
+    raw_slides = extract_slides(processed)
     html_slides = [parse_markdown_to_html(slide) for slide in raw_slides]
     return html_slides, json.dumps(html_slides)
 
@@ -175,6 +184,9 @@ def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
             print("Please ensure npm is installed and accessible in your PATH, or install '@mermaid-js/mermaid-cli' manually (e.g., 'npm install -g @mermaid-js/mermaid-cli').")
             raise SystemExit(1)
 
+    import tempfile
+    import json as _json
+
     for root, _, files in os.walk(src_dir):
         for file in files:
             if file.lower().endswith(mermaid_extensions):
@@ -184,24 +196,31 @@ def _compile_mermaid_diagrams(src_dir: Path, out_dir: Path):
                 dest_path = out_dir / relative_path.parent / dest_file_name
                 dest_path.parent.mkdir(parents=True, exist_ok=True)
 
-                command = [
+                base_cmd = [
                     'mmdc',
                     '-i', str(src_path),
                     '-o', str(dest_path)
-]
+                ]
 
+                # First attempt: plain run
                 try:
-                    subprocess.run(command, check=True)
+                    subprocess.run(base_cmd, check=True)
                     print(f"Compiled Mermaid: {src_path} -> {dest_path}")
+                    continue
                 except subprocess.CalledProcessError as e:
-                    print(f"Error compiling Mermaid diagram {src_path}: {e}")
-                    raise SystemExit(1)
+                    print(f"mmdc failed for {src_path} (first attempt): {e}. Retrying with a Puppeteer no-sandbox config...")
 
+                # Retry with Puppeteer config disabling sandbox (helps on CI like GitHub Actions)
                 try:
-                    subprocess.run(command, check=True)
-                    print(f"Compiled Mermaid: {src_path} -> {dest_path}")
+                    pp_cfg = {"args": ["--no-sandbox", "--disable-setuid-sandbox"]}
+                    with tempfile.NamedTemporaryFile('w', delete=False, suffix='.json') as tf:
+                        tf.write(_json.dumps(pp_cfg))
+                        tf_path = tf.name
+                    retry_cmd = base_cmd + ['-p', tf_path]
+                    subprocess.run(retry_cmd, check=True)
+                    print(f"Compiled Mermaid (no-sandbox): {src_path} -> {dest_path}")
                 except subprocess.CalledProcessError as e:
-                    print(f"Error compiling Mermaid diagram {src_path}: {e}")
+                    print(f"Error compiling Mermaid diagram {src_path} even with no-sandbox config: {e}")
                     raise SystemExit(1)
 
 
@@ -313,11 +332,16 @@ def _emit_module(slides_path: Path, module_rel_dir: Path, title: str):
     out_module_dir.mkdir(parents=True, exist_ok=True)
 
     slides_text = slides_path.read_text(encoding='utf-8')
-    html_slides, slides_json = generate_slides_html(title, slides_text)
 
-    # Determine CSS path relative to module dir
+    # Allow Jinja includes relative to the module directory and global docs dir
+    search_paths = [str(slides_path.parent), str(SRC)]
+    html_slides, slides_json = generate_slides_html(title, slides_text, search_paths=search_paths)
+
+    # Render page with external Jinja template
     css_rel_path = Path('..') / 'styles' / 'main.css'
-    html = VUE_TEMPLATE.format(title=title, slides_json=slides_json, css_path=str(css_rel_path))
+    env = Environment(loader=FileSystemLoader(str(ROOT / 'jinja_templates')))
+    template = env.get_template('slide_template.html.jinja')
+    html = template.render(title=title, slides_json=slides_json, css_path=str(css_rel_path))
 
     (out_module_dir / 'index.html').write_text(html, encoding='utf-8')
 

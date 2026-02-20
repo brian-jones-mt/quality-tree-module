@@ -3,73 +3,73 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title}</title>
+    <title>{{ title }}</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-      mermaid.initialize({{
+      mermaid.initialize({
         startOnLoad: true,
         querySelector: '.slide-content code.language-mermaid',
-      }});
+      });
     </script>
-    <link rel="stylesheet" href="{css_path}">
+    <link rel="stylesheet" href="{{ css_path }}">
   </head>
   <body>
     <div id="app">
       <div class="slide-container">
         <div class="slide-content" v-html="currentSlide"></div>
         <div class="slide-control">
-          <button @click="previousSlide" :disabled="currentIndex === 0">← Previous</button>
-          <span class="slide-number">{{{{ currentIndex + 1 }}}} / {{{{ slides.length }}}}</span>
-          <button @click="nextSlide" :disabled="currentIndex === slides.length - 1">Next →</button>
+          {% raw %}<button @click="previousSlide" :disabled="currentIndex === 0">← Previous</button>
+          <span class="slide-number">{{ currentIndex + 1 }} / {{ slides.length }}</span>
+          <button @click="nextSlide" :disabled="currentIndex === slides.length - 1">Next →</button>{% endraw %}
         </div>
       </div>
       <div class="keyboard-hint">Use arrow keys to navigate</div>
     </div>
 
     <script>
-      const {{ createApp }} = Vue;
+      {% raw %}const { createApp } = Vue;
 
-      const slides = { slides_json };
+      const slides = {% endraw %}{{ slides_json | safe }}{% raw %};
 
-      createApp({{
-        data() {{
-          return {{
+      createApp({
+        data() {
+          return {
             slides: slides,
             currentIndex: 0
-          }};
-        }},
-        computed: {{
-          currentSlide() {{
+          };
+        },
+        computed: {
+          currentSlide() {
             return this.slides[this.currentIndex];
-          }}
-        }},
-        methods: {{
-          nextSlide() {{
-            if (this.currentIndex < this.slides.length - 1) {{
+          }
+        },
+        methods: {
+          nextSlide() {
+            if (this.currentIndex < this.slides.length - 1) {
               this.currentIndex++;
-            }}
-          }},
-          previousSlide() {{
-            if (this.currentIndex > 0) {{
+            }
+          },
+          previousSlide() {
+            if (this.currentIndex > 0) {
               this.currentIndex--;
-            }}
-          }},
-          handleKeydown(event) {{
-            if (event.key === 'ArrowRight') {{
+            }
+          },
+          handleKeydown(event) {
+            if (event.key === 'ArrowRight') {
               this.nextSlide();
-            }} else if (event.key === 'ArrowLeft') {{
+            } else if (event.key === 'ArrowLeft') {
               this.previousSlide();
-            }}
-          }}
-        }},
-        mounted() {{
+            }
+          }
+        },
+        mounted() {
           window.addEventListener('keydown', this.handleKeydown);
-        }},
-        unmounted() {{
+        },
+        unmounted() {
           window.removeEventListener('keydown', this.handleKeydown);
-        }}
-      }}).mount('#app');
+        }
+      }).mount('#app');{% endraw %}
     </script>
   </body>
 </html>

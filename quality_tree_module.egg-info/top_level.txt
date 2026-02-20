@@ -1,4 +1,6 @@
 dist
 docs
 generate_slides
+jinja_templates
 styles
+templates

@@ -51,7 +51,7 @@ uv sync
 
 ### 2. Generate the Slides
 
-The content is written in Markdown and converted into an interactive Vue.js slide deck.
+The content is written in Markdown and converted into an interactive Vue.js slide deck. Pages are rendered via a Jinja2 HTML template, and slides can include external Markdown partials via Jinja `{% include %}`.
 
 ```bash
 uv run python3 generate_slides.py
@@ -62,7 +62,8 @@ This script performs the following:
 - Converts all `.mmd` / `.mermaid` files in `docs/` to SVG images.
 - Converts all PlantUML files (`.puml`, `.plantuml`, `.uml`, `.iuml`) in `docs/` to SVG images.
   - Prefers local PlantUML CLI or `PLANTUML_JAR`; otherwise falls back to the Kroki cloud renderer.
-- Generates HTML slide decks for each module in the `dist/` directory.
+- Preprocesses each `slides.md` with Jinja2 so you can include external files (partials) before Markdown conversion.
+- Generates HTML slide decks for each module in the `dist/` directory using `jinja_templates/slide_template.html.jinja`.
 - Creates a central `index.html` linking all modules.
 
 ### 3. Preview the Slides
@@ -85,13 +86,24 @@ xdg-open dist/index.html
     - Each module has its own directory with a `slides.md` file.
     - Mermaid diagrams (`.mmd`) are stored alongside the slides.
 - `styles/`: SASS files for slide styling.
-- `generate_slides.py`: The build engine that converts Markdown to Vue.js slides.
+- `generate_slides.py`: The build engine that converts Markdown to Vue.js slides (now using Jinja2 for templating and includes).
+- `jinja_templates/slide_template.html.jinja`: The Jinja2 template used to render each module's `index.html`.
 - `.github/workflows/deploy.yml`: Automatically deploys the slides to GitHub Pages on every push to `main`.
 
 ## ✍️ Customizing Content
 
 ### Adding/Editing Slides
 Edit the `slides.md` file within the relevant module directory. Use `---` on a new line to separate slides.
+
+You can now use **Jinja2 includes** inside `slides.md` to compose slides from external files (e.g., scenarios, exercises):
+
+```
+{% include "prioritising quality requirements/Scenario 1.md" %}
+---
+{% include "prioritising quality requirements/Scenario 2.md" %}
+```
+
+Includes are resolved relative to the module directory (and `docs/`). The included files are treated as raw Markdown before slide splitting.
 
 ### Adding Diagrams
 - Mermaid: create a `.mmd` (or `.mermaid`) file in the module directory. The build script will compile it to an `.svg` in the mirrored `dist/` folder. Reference it from slides with:
