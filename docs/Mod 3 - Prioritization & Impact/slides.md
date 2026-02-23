@@ -18,6 +18,7 @@
 
 By the end of this module, you will be able to:
 
+- **Develop** a trade-off mindset: Understanding that you can't have everything
 - **Evaluate** each quality requirement on two dimensions:
     - Business Value (High / Medium / Low)
     - Architectural Impact (High / Medium / Low)
@@ -298,6 +299,9 @@ To solidify your understanding of the Value/Impact Matrix and ASRs, we will now 
 - A Quality Tree is only successful if it identifies a **conflict**.
 - If your tree says "Security is #1" and "Speed is #1," you haven't made a tree—you've made a wish list.
 - The tree exists to force the trade-off.
+
+**The Mindset Shift:**
+Prioritization isn't about what we *want* to do; it's about what we are *willing to sacrifice*.
 
 ---
 

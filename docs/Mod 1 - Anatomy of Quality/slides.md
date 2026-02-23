@@ -18,6 +18,7 @@
 
 By the end of this module, you will be able to:
 
+- **Adopt** the Quality Attribute mindset: Thinking in scenarios, not just categories
 - **Define** quality attributes and understand they are not binary states
 - **Identify** vague requirements and reframe them into measurable criteria
 - **Explain** the three-layer structure of quality attributes:
@@ -138,7 +139,8 @@ What characteristics are being traded off in the following scenarios:
 
 To make these characteristics usable, we must refine them. A development team doesn't build "Performance"; they build "Low Latency" or "High Throughput."
 
-The Refinement Process:
+**The Refinement Process is a mental exercise:**
+It's about shifting from abstract desires to concrete triggers and measurable responses.
 
 - Quality Attribute: Performance
 

@@ -18,6 +18,7 @@
 
 By the end of this module, you will be able to:
 
+- **Facilitate** the "Quality Tree conversation" to align stakeholders
 - **Extract** concrete requirements from stakeholders using facilitated workshops
 - **Apply** the Stimulus-Response formula to every requirement:
     - Source (Who/What triggers it?)
@@ -135,6 +136,8 @@ Could be measured by:
 **Goal:** Understand the systematic steps to construct a comprehensive quality tree.
 
 Building a quality tree is not a one-time event, but an iterative process of discovery, refinement, and prioritization involving various stakeholders. It translates ambiguous quality requirements into concrete, measurable scenarios.
+
+**Remember:** The outcome is the *agreement* and *shared understanding*, not just the diagram.
 
 Here are the key phases:
 

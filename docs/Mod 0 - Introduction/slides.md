@@ -30,6 +30,7 @@
 
 By the end of this introduction, you will understand:
 
+- **The Quality Tree Mindset:** Why it's a way of thinking, not just a documentation task
 - **What a Quality Tree is** and how it differs from traditional requirements documents
 - **Why architecture fails** when quality attributes are left undefined
 - **The core problem** this workshop solves: translating vague requirements into architectural decisions
@@ -53,10 +54,11 @@ You've all been there:
 
 This workshop teaches you to:
 
-1. **Define** quality explicitly before designing anything
-2. **Measure** whether your architecture actually delivers
-3. **Defend** your choices with data instead of opinion
-4. **Protect** the architecture from scope creep and impossible requests
+1. **Adopt a Quality Mindset:** Use the tree as a framework for better architectural conversations
+2. **Define** quality explicitly before designing anything
+3. **Measure** whether your architecture actually delivers
+4. **Defend** your choices with data instead of opinion
+5. **Protect** the architecture from scope creep and impossible requests
 
 By the end of today, you'll have a framework that turns vague business speak into concrete architectural decisions.
 
