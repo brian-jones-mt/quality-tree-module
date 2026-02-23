@@ -240,9 +240,23 @@ To deepen your understanding of Quality Tree Variants, you will now work through
 
 ## Summary & Key Takeaways
 
-- **Context is King:** The "right" Quality Tree depends on your project's stage, industry, and specific challenges.
-- **Four Key Variants:** Utility, Risk-Storming, Security/Compliance, and Maintenance trees offer different lenses.
-- **Strategic Selection:** Choose the variant that addresses your most pressing architectural concerns.
-- **Portfolio Approach:** Combine variants for complex systems, layering concerns as needed.
-- **Evolving Trees:** Quality Trees are dynamic and should be adapted as your project matures.
-- **Risk Mitigation:** Variants are powerful tools for proactive risk-driven architectural decision-making.
+- **Context is King:**
+    - The "right" Quality Tree depends on your project's stage, industry, and specific challenges.
+- **Four Key Variants:** 
+    - Utility, 
+    - Risk-Storming, 
+    - Security/Compliance, 
+    - Maintenance trees.
+- **Strategic Selection:** 
+    - Choose the variant that addresses your most pressing architectural concerns.
+- **Portfolio Approach:** 
+    - Combine variants for complex systems, layering concerns as needed.
+    - Make new trees from other lenses as needed.
+    - Regularly review and update your trees to reflect current priorities.
+- **Evolving Trees:** 
+    - Quality Trees are dynamic and should be adapted as your project matures.
+- **Risk Mitigation:** 
+    - Variants are powerful tools for proactive risk-driven architectural decision-making.
+- **People over Processes**
+    - These variants are not rules to bind you, but suggestions to inspire you.
+    - If none fit, or you think of a better way, do it your own way.
